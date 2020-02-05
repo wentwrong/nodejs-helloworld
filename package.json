@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "lint": "eslint src test",
-    "test": "mocha test/**/*-test.js",
-    "watch": "npm test -- -w"
+    "test": "npm run lint && mocha test/**/*-test.js",
+    "watch": "npm test -- -w",
+    "lint-fix": "eslint src test --fix"
   },
   "repository": {
     "type": "git",
