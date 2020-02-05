@@ -2,12 +2,13 @@
   "name": "nodejs-katas",
   "version": "1.0.0",
   "description": "Basic Node.js exercises",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "eslint test",
-    "test": "mocha test/**/*-test.js",
-    "watch": "npm test -- -w"
+    "start": "node src/index.js",
+    "lint": "eslint src test",
+    "test": "npm run lint && mocha test/**/*-test.js",
+    "watch": "npm test -- -w",
+    "lint-fix": "eslint src test --fix"
   },
   "repository": {
     "type": "git",
