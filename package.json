@@ -8,7 +8,8 @@
     "lint": "eslint src test",
     "test": "npm run lint && mocha test/**/*-test.js",
     "watch": "npm test -- -w",
-    "lint-fix": "eslint src test --fix"
+    "lint-fix": "eslint src test --fix",
+    "windows-debug-test": "@powershell -Command $env:DEBUG='http:*'; npm test"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,9 @@
     "sinon": "^8.1.1"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "express": "^4.17.1",
-    "got": "^10.4.0"
+    "got": "^10.4.0",
+    "supports-color": "^7.1.0"
   }
 }
