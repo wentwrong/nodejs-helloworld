@@ -5,9 +5,11 @@ const app = express();
 
 app.use(express.static('static'));
 
-if (require.main === module)
-    (async () => await new Server(app).start())();
+if (require.main === module) {
+    const server = new Server(app);
 
+    server.start();
+}
 
 module.exports = {
     server: new Server(app)

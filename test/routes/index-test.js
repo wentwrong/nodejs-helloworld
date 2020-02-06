@@ -12,15 +12,10 @@ describe('Index page', () => {
         await server.stop();
     });
 
-    it('should return a 200 response', async () => {
-        const response = await got(`http://${server.host}:${server.port}`);
-
-        expect(response.statusCode).equal(200);
-    });
-
     it('should show "Hello Node.js" message', async () => {
         const response = await got(`http://${server.host}:${server.port}`);
 
+        expect(response.statusCode).equal(200);
         expect(response.body).include('Hello Node.js');
     });
 });
