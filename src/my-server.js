@@ -14,7 +14,11 @@ class Server {
 
     start () {
         return new Promise((resolve, reject) => {
-            this.server = this.app.listen(this.port, resolve).on('error', reject);
+            this.server = this.app.listen(this.port, resolve)
+                .once('error', err => {
+                    error(err);
+                    reject();
+                });
         })
             .then(() => log('Server started on %s:%d', this.host, this.port))
             .catch(() => error('Server failed to start'));
@@ -22,7 +26,11 @@ class Server {
 
     stop () {
         return new Promise((resolve, reject) => {
-            this.server = this.server.close(resolve).on('error', reject);
+            this.server = this.server.close(resolve)
+                .once('error', err => {
+                    error(err);
+                    reject();
+                });
         })
             .then(() => log('Server stop listening for connections'))
             .catch(() => error('Failed to close server'));
