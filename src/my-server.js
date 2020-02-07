@@ -1,4 +1,5 @@
 const debug = require('debug');
+const { once } = require('events');
 
 const { DEFAULT_HOST, DEFAULT_PORT } = require('./constants');
 
@@ -12,34 +13,42 @@ class Server {
         this.host = host;
     }
 
-    start () {
-        return new Promise((resolve, reject) => {
-            this.server = this.app.listen(this.port, resolve)
-                .once('error', err => {
-                    error(err);
-                    reject(err);
-                });
-        })
-            .then(() => log(`Server started on ${this.host}:${this.port}`))
-            .catch(err => {
-                error(`Server failed to start`);
-                return Promise.reject(err);
-            });
+    _listenPromisify () {
+        const netServer = this.app.listen(this.port);
+
+        return once(netServer, 'listening').then(() => netServer);
     }
 
-    stop () {
-        return new Promise((resolve, reject) => {
-            this.server = this.server.close(resolve)
-                .once('error', err => {
-                    error(err);
-                    reject(err);
-                });
-        })
-            .then(() => log(`Server stop listening for connections`))
-            .catch(err => {
-                error(`Failed to close server`);
-                return Promise.reject(err);
-            });
+    _closePromisify () {
+        if (this.server) {
+            const netServer = this.server.close();
+
+            return once(netServer, 'close');
+        }
+        return Promise.reject(new Error('Server instance not found'));
+
+    }
+
+    async start () {
+        try {
+            this.server = await this._listenPromisify();
+            log(`Server started on ${this.host}:${this.port}`);
+        }
+        catch (err) {
+            error(`Server failed to start`);
+            throw err;
+        }
+    }
+
+    async stop () {
+        try {
+            await this._closePromisify();
+            log(`Server stoped`);
+        }
+        catch (err) {
+            error('Server failed to stop');
+            throw err;
+        }
     }
 }
 
