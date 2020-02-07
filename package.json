@@ -1,13 +1,14 @@
 {
-  "name": "nodejs-katas",
+  "name": "wentwrong-helloworld",
   "version": "1.0.0",
   "description": "Basic Node.js exercises",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "start-debug": "cross-env DEBUG=http:*,app:* npm run start",
     "lint": "eslint src test",
     "test": "npm run lint && mocha test/**/*-test.js",
-    "test-debug": "cross-env DEBUG=http:* npm test",
+    "test-debug": "cross-env DEBUG=http:*,app:* npm test",
     "watch": "npm test -- -w",
     "lint-fix": "npm run lint -- --fix"
   },

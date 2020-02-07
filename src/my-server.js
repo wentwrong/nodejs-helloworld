@@ -1,13 +1,11 @@
 const debug = require('debug');
 const { once } = require('events');
 
-const { DEFAULT_HOST, DEFAULT_PORT } = require('./constants');
-
 const log = debug('http:log');
 const error = debug('http:error');
 
 class Server {
-    constructor (app, host = DEFAULT_HOST, port = DEFAULT_PORT) {
+    constructor (app, port, host) {
         this.app = app;
         this.port = port;
         this.host = host;

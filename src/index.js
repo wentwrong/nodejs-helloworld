@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('static'));
 
 if (require.main === module) {
-    const server = new Server(app);
+    const app = new App({ port: 3002 });
 
     server.start();
 }
