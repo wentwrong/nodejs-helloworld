@@ -1,4 +1,10 @@
+const debug = require('debug');
+const { once } = require('events');
+
 const { DEFAULT_HOST, DEFAULT_PORT } = require('./constants');
+
+const log = debug('http:log');
+const error = debug('http:error');
 
 class Server {
     constructor (app, host = DEFAULT_HOST, port = DEFAULT_PORT) {
@@ -7,20 +13,42 @@ class Server {
         this.host = host;
     }
 
-    start () {
-        return new Promise((resolve, reject) => {
-            this.server = this.app.listen(this.port, resolve).on('error', reject);
-        })
-            .then(() => console.log(`Server started on ${this.host}:${this.port}`))
-            .catch(() => console.log(`Server failed to start`));
+    _listenPromisify () {
+        const netServer = this.app.listen(this.port);
+
+        return once(netServer, 'listening').then(() => netServer);
     }
 
-    stop () {
-        return new Promise((resolve, reject) => {
-            this.server = this.server.close(resolve).on('error', reject);
-        })
-            .then(() => console.log(`Server stop listening for connections`))
-            .catch(() => console.log(`Failed to close server`));
+    _closePromisify () {
+        if (this.server) {
+            const netServer = this.server.close();
+
+            return once(netServer, 'close');
+        }
+        return Promise.reject(new Error('Server instance not found'));
+
+    }
+
+    async start () {
+        try {
+            this.server = await this._listenPromisify();
+            log(`Server started on ${this.host}:${this.port}`);
+        }
+        catch (err) {
+            error(`Server failed to start`);
+            throw err;
+        }
+    }
+
+    async stop () {
+        try {
+            await this._closePromisify();
+            log(`Server stoped`);
+        }
+        catch (err) {
+            error('Server failed to stop');
+            throw err;
+        }
     }
 }
 

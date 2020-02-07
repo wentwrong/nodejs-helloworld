@@ -1,12 +1,15 @@
-const path = require('path');
 const express = require('express');
 const Server = require('./my-server');
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
+app.use(express.static('static'));
+
+if (require.main === module) {
+    const server = new Server(app);
+
+    server.start();
+}
 
 module.exports = {
     server: new Server(app)
