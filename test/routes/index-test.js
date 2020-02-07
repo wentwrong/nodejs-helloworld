@@ -1,21 +1,25 @@
 const { expect } = require('chai');
 const got = require('got');
 
-const { server } = require('../../src/index');
+const App = require('../../src/app');
 
 describe('Index page', () => {
-    before(async () => {
-        await server.start();
+    const apps = [3001, 3002, 3003].map(port => new App({ port }));
+
+    before(() => {
+        apps.forEach(app => app.run());
     });
 
-    after(async () => {
-        await server.stop();
+    after(() => {
+        apps.forEach(app => app.close());
     });
 
-    it('should show "Hello Node.js" message', async () => {
-        const response = await got(`http://${server.host}:${server.port}`);
+    it('all apps should show "Hello Node.js" message', async () => {
+        apps.forEach(async app => {
+            const response = await got(`http://${app.server.host}:${app.server.port}`);
 
-        expect(response.statusCode).equal(200);
-        expect(response.body).include('Hello Node.js');
+            expect(response.statusCode).equal(200);
+            expect(response.body).include('Hello Node.js');
+        });
     });
 });

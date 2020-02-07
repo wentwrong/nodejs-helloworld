@@ -15,6 +15,7 @@ class Server {
         const netServer = this.app.listen(this.port);
 
         return once(netServer, 'listening').then(() => netServer);
+
     }
 
     _closePromisify () {
@@ -34,7 +35,7 @@ class Server {
         }
         catch (err) {
             error(`Server failed to start`);
-            throw err;
+            error(err);
         }
     }
 
@@ -45,7 +46,7 @@ class Server {
         }
         catch (err) {
             error('Server failed to stop');
-            throw err;
+            error(err);
         }
     }
 }
