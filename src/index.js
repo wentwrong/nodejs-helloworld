@@ -5,3 +5,5 @@ if (require.main === module) {
 
     app.run();
 }
+
+module.exports = App;
