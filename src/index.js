@@ -1,16 +1,9 @@
-const express = require('express');
-const Server = require('./my-server');
-
-const app = express();
-
-app.use(express.static('static'));
+const App = require('./app');
 
 if (require.main === module) {
-    const server = new Server(app);
+    const app = new App();
 
-    server.start();
+    app.run();
 }
 
-module.exports = {
-    server: new Server(app)
-};
+module.exports = App;
