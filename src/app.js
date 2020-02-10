@@ -10,12 +10,12 @@ class App {
         this.server = new Server(this.express, port, host);
     }
 
-    run () {
-        this.server.start();
+    async run () {
+        await this.server.start();
     }
 
-    close () {
-        this.server.stop();
+    async close () {
+        await this.server.stop();
     }
 }
 

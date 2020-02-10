@@ -35,7 +35,7 @@ class Server {
         }
         catch (err) {
             error(`Server failed to start`);
-            error(err);
+            throw err;
         }
     }
 
@@ -46,7 +46,7 @@ class Server {
         }
         catch (err) {
             error('Server failed to stop');
-            error(err);
+            throw err;
         }
     }
 }
