@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const got = require('got');
-
 const App = require('../../src/app');
 
 describe('Index page', () => {

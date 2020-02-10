@@ -1,6 +1,5 @@
 const debug = require('debug');
 const { once } = require('events');
-
 const log = debug('http:log');
 const error = debug('http:error');
 
@@ -15,7 +14,6 @@ class Server {
         const netServer = this.app.listen(this.port);
 
         return once(netServer, 'listening').then(() => netServer);
-
     }
 
     _closePromisify () {
@@ -24,6 +22,7 @@ class Server {
 
             return once(netServer, 'close');
         }
+
         return Promise.reject(new Error('Server instance not found'));
 
     }
@@ -31,10 +30,12 @@ class Server {
     async start () {
         try {
             this.server = await this._listenPromisify();
+
             log(`Server started on ${this.host}:${this.port}`);
         }
         catch (err) {
             error(`Server failed to start`);
+
             throw err;
         }
     }
@@ -42,10 +43,12 @@ class Server {
     async stop () {
         try {
             await this._closePromisify();
+
             log(`Server stoped`);
         }
         catch (err) {
             error('Server failed to stop');
+
             throw err;
         }
     }
