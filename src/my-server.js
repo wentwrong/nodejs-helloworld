@@ -1,7 +1,5 @@
-const debug = require('debug');
 const { once } = require('events');
-const log = debug('http:log');
-const error = debug('http:error');
+const { log, error } = require('./debug');
 
 class Server {
     constructor (app, port, host) {
