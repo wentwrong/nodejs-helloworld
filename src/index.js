@@ -1,4 +1,3 @@
-require('dotenv').config();
 const App = require('./app');
 
 if (require.main === module) {

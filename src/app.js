@@ -1,10 +1,10 @@
 const express = require('express');
 
 const Server = require('./my-server');
-const { DEFAULT_HOST, DEFAULT_PORT } = require('./constants');
+const { DEFAULT_PORT, DEFAULT_HOST } = require('./config');
 
 class App {
-    constructor ({ port = process.env.PORT || DEFAULT_PORT, host = process.env.HOST || DEFAULT_HOST } = {}) {
+    constructor ({ port = DEFAULT_PORT, host = DEFAULT_HOST } = {}) {
         this.express = express();
         this.express.use(express.static('static'));
         this.server = new Server(this.express, port, host);
