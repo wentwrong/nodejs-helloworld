@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "start-debug": "cross-env DEBUG=gh-canary:* npm run start",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "test": "npm run lint && mocha test/**/*-test.js",
     "test-debug": "cross-env DEBUG=gh-canary:* npm test",
     "watch": "npm test -- -w",
@@ -34,6 +34,7 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "got": "^10.4.0"
+    "got": "^10.4.0",
+    "pug": "^2.0.4"
   }
 }
