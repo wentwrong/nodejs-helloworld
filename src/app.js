@@ -3,11 +3,13 @@ const Server = require('./my-server');
 const { DEFAULT_PORT, DEFAULT_HOST } = require('./config');
 
 class App {
-    constructor ({ port = DEFAULT_PORT, host = DEFAULT_HOST } = {}) {
-        this.express = express();
-        this.express.use(express.static('static'));
+    constructor ({ port = DEFAULT_PORT, host = DEFAULT_HOST, e = express() } = {}) {
+        this.server = new Server(this._defaultConfig(e), port, host);
+    }
 
-        this.server = new Server(this.express, port, host);
+    _defaultConfig (e) {
+        e.get('/', (req, res) => res.send('Hello Node.js'));
+        return e;
     }
 
     async run () {
