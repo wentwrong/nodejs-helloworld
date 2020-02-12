@@ -1,16 +1,24 @@
+require('./config');
+
 const express = require('express');
 const Server = require('./my-server');
-const { DEFAULT_PORT, DEFAULT_HOST } = require('./config');
-const router = require('./router');
+const router = require('./routes/router');
 
 class App {
-    constructor ({ port = DEFAULT_PORT, host = DEFAULT_HOST } = {}) {
+    constructor ({ port = process.env.PORT, host = process.env.HOST } = {}) {
         this.server = new Server(this._configExpress(express()), port, host);
     }
 
     _configExpress (e) {
-        e.set('view engine', 'pug');
+        e.use(express.static('client/public'));
         e.use(router);
+
+        // NOTE: custom middleware after all
+        e.use((err, req, res, next) => {
+            res.status(err.status).json(err);
+            next();
+        });
+
         return e;
     }
 

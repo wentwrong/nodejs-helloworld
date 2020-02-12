@@ -1,8 +1,8 @@
 const { expect } = require('chai');
 const got = require('got');
-const App = require('../../');
+const App = require('../../server');
 
-describe('Index page', () => {
+describe('REST API', () => {
     const app = new App();
 
     before(async () => {
@@ -13,10 +13,12 @@ describe('Index page', () => {
         await app.close();
     });
 
-    it('app should show "Hello Node.js" message', async () => {
-        const response = await got(`http://${app.server.host}:${app.server.port}`);
+    it(`GET api/${process.env.ACTUAL_API_VERSION}/pulls/ should return 200 when passed valid repo`, async () => {
+        process.env.OWNER = 'wentwrong';
+        process.env.REPO = 'gh-canary';
+
+        const response = await got(`http://${app.server.host}:${app.server.port}/api/${process.env.ACTUAL_API_VERSION}/pulls`);
 
         expect(response.statusCode).equal(200);
-        expect(response.body).include('Hello Node.js');
     });
 });
