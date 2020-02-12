@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const got = require('got');
-const App = require('../../server');
+const App = require('../../src/index');
 
 describe('REST API', () => {
     const app = new App();

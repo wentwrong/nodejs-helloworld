@@ -10,7 +10,7 @@ class App {
     }
 
     _configExpress (e) {
-        e.use(express.static('client/public'));
+        e.use(express.static('src/client/public'));
         e.use(router);
 
         // NOTE: custom middleware after all
