@@ -3,7 +3,7 @@ const debug = require('../debug');
 const { Octokit } = require('@octokit/rest');
 
 class PullController {
-    static async list (req, res, next) {
+    static async list (req, res) {
         const octokit = Octokit({
             baseUrl: config.GITHUB_API_URL
         });
@@ -25,12 +25,9 @@ class PullController {
             debug.error(`Error happened when ${req.ip} requests ${req.path}`);
             debug.error(err);
 
-            const error = {
-                message: 'An error has occured while fetching pull-requests from server.',
-                status:  500
-            };
-
-            next(error);
+            res
+                .status(500)
+                .json({ error: 'An error has occured while fetching pull-requests from server.' });
         }
     }
 

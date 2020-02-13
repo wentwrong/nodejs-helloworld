@@ -32,8 +32,14 @@ class Server {
             log(`Server started on ${this.host}:${this.port}`);
         }
         catch (err) {
-            error(`Server failed to start`);
-
+            switch (err.code) {
+                case 'EACCES':
+                    error(`Server requires elevated privileges`);
+                    break;
+                case 'EADDRINUSE':
+                    error(`Server is already in use`);
+                    break;
+            }
             throw err;
         }
     }

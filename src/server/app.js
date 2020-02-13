@@ -2,6 +2,7 @@ const config = require('./config');
 const express = require('express');
 const Server = require('./my-server');
 const createRoutes = require('./routes');
+const morgan = require('morgan');
 
 class App {
     constructor ({ port = config.PORT, host = config.HOST } = {}) {
@@ -13,18 +14,12 @@ class App {
         const routes = await createRoutes(config.ROUTES_DIR);
 
         e.use(routes);
-        e.use(express.static(config.STATIC_DIR));
 
-        // NOTE: custom middleware error handler
-        e.use((err, req, res, next) => {
-            res.status(err.status || 500);
-            res.json({
-                error: {
-                    message: err.message
-                }
-            });
-            next();
-        });
+        if (config.NODE_ENV === 'development')
+            e.use(morgan('dev'));
+
+
+        e.use(express.static(config.STATIC_DIR));
 
         return e;
     }
