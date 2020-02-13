@@ -1,5 +1,5 @@
 const express = require('express');
-const PullController = require('../../../../controllers/pullController');
+const PullController = require('../../../../controllers/pullcontroller');
 
 class PullsRouter extends express.Router {
     constructor (...props) {
