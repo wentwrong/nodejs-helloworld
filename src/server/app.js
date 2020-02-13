@@ -1,21 +1,28 @@
-require('./config');
-
+const config = require('./config');
 const express = require('express');
 const Server = require('./my-server');
-const router = require('./routes/router');
+const createRoutes = require('./routes');
 
 class App {
-    constructor ({ port = process.env.PORT, host = process.env.HOST } = {}) {
-        this.server = new Server(this._configExpress(express()), port, host);
+    constructor ({ port = config.PORT, host = config.HOST } = {}) {
+        this.port = port;
+        this.host = host;
     }
 
-    _configExpress (e) {
-        e.use(express.static('src/client/public'));
-        e.use(router);
+    async _configExpress (e) {
+        const routes = await createRoutes(config.ROUTES_DIR);
 
-        // NOTE: custom middleware after all
+        e.use(routes);
+        e.use(express.static(config.STATIC_DIR));
+
+        // NOTE: custom middleware error handler
         e.use((err, req, res, next) => {
-            res.status(err.status).json(err);
+            res.status(err.status || 500);
+            res.json({
+                error: {
+                    message: err.message
+                }
+            });
             next();
         });
 
@@ -23,11 +30,17 @@ class App {
     }
 
     async run () {
+        const configuredExpress = await this._configExpress(express());
+
+        this.server = new Server(configuredExpress, this.port, this.host);
         await this.server.start();
     }
 
     async close () {
-        await this.server.stop();
+        if (this.server)
+            await this.server.stop();
+        else
+            throw new Error('Stop when application not running');
     }
 }
 

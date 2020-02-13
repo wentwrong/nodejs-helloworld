@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const got = require('got');
 const App = require('../../src/index');
 
-describe('REST API', () => {
+describe('Index', () => {
     const app = new App();
 
     before(async () => {
@@ -13,12 +13,10 @@ describe('REST API', () => {
         await app.close();
     });
 
-    it(`GET api/${process.env.ACTUAL_API_VERSION}/pulls/ should return 200 when passed valid repo`, async () => {
-        process.env.OWNER = 'wentwrong';
-        process.env.REPO = 'gh-canary';
+    it(`should return 200 response`, async () => {
+        const response = await got(`http://${app.server.host}:${app.server.port}/`);
 
-        const response = await got(`http://${app.server.host}:${app.server.port}/api/${process.env.ACTUAL_API_VERSION}/pulls`);
-
+        expect(response.body).contain('Dashboard');
         expect(response.statusCode).equal(200);
     });
 });

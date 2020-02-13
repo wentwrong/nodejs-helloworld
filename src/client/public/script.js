@@ -6,7 +6,7 @@ class App {
 
     async renderPage () {
         try {
-            const response = await fetch('api/v1/pulls/');
+            const response = await fetch('api/v1/pulls/list');
             const { pullRequestList } = await response.json();
     
             pullRequestList.forEach(pr => this._createNewPullRequestDiv(pr));
