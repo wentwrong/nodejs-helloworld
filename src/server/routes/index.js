@@ -5,17 +5,19 @@ const mainRouter = require('express').Router();
 
 async function createRoutes (routesDir) {
     try {
-        return (await globby('**/!(index.js)/*.js', {
-            cwd: path.resolve(routesDir)
-        }))
+        const files = await globby('**/!(index.js)/*.js', { cwd: path.resolve(routesDir) });
+
+        files
             .map(filename => ({
                 routePrefix: path.dirname(filename),
                 Router:      require(`./${filename}`)
             }))
-            .reduce((rootRouter, {
+            .map(({
                 routePrefix,
                 Router
-            }) => rootRouter.use(`/${routePrefix}`, new Router()), mainRouter);
+            }) => mainRouter.use(`/${routePrefix}`, new Router()));
+
+        return mainRouter;
     }
     catch (err) {
         debug.error('An error has occured when processing app routes');
