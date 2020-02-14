@@ -1,9 +1,8 @@
 const config = require('./config');
-const debug = require('./debug');
 const express = require('express');
 const Server = require('./server');
 const createRoutes = require('./createRoutes');
-const morgan = require('morgan');
+const logger = require('./middleware/logger');
 
 class App {
     constructor ({ port = config.PORT, host = config.HOST, mockGithubUrl = '' } = {}) {
@@ -13,8 +12,9 @@ class App {
     }
 
     async _configExpress (e) {
-        e.use(morgan('combined', { stream: { write: msg => debug.morgan(msg) } }));
+        e.use(logger);
         e.use(express.static(config.STATIC_DIR));
+
         e.set('mock-github', this.mockGithubUrl);
         e.set('json spaces', 2);
 
