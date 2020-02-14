@@ -29,7 +29,7 @@ class Server {
         try {
             this.server = await this._listenPromisify();
 
-            log(`Server started on ${this.host}:${this.port}`);
+            log(`Server '${this.host}:${this.port}' started`);
         }
         catch (err) {
             switch (err.code) {
@@ -48,7 +48,7 @@ class Server {
         try {
             await this._closePromisify();
 
-            log(`Server stoped`);
+            log(`Server '${this.host}:${this.port}' stopped working`);
         }
         catch (err) {
             error('Server failed to stop');

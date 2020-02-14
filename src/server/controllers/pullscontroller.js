@@ -2,10 +2,10 @@ const config = require('../config');
 const debug = require('../debug');
 const { Octokit } = require('@octokit/rest');
 
-class PullController {
+class PullsController {
     static async list (req, res) {
         const octokit = Octokit({
-            baseUrl: config.GITHUB_API_URL
+            baseUrl: req.app.get('mock-github') || config.GITHUB_API_URL
         });
 
         const options = octokit.pulls.list.endpoint.merge({
@@ -22,7 +22,7 @@ class PullController {
             res.send({ pullRequestList: pullRequests.flat() });
         }
         catch (err) {
-            debug.error(`Error happened when ${req.ip} requests ${req.path}`);
+            debug.error(`An error has happened when ${req.ip} requests ${req.path}`);
             debug.error(err);
 
             res
@@ -36,4 +36,4 @@ class PullController {
     }
 }
 
-module.exports = PullController;
+module.exports = PullsController;

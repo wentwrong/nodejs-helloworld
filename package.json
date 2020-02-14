@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "start-debug": "cross-env DEBUG=gh-canary:* npm run start",
+    "start-debug": "cross-env DEBUG=gh-canary:*,morgan:* npm run start",
     "lint": "eslint src/server test",
     "test": "npm run lint && mocha test/**/*-test.js",
     "test-debug": "cross-env DEBUG=gh-canary:* npm test",
@@ -27,7 +27,6 @@
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "mocha": "^7.0.1",
-    "morgan": "^1.9.1",
     "proxyquire": "^2.1.3",
     "sinon": "^8.1.1"
   },
@@ -38,6 +37,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "globby": "^11.0.0",
-    "got": "^10.4.0"
+    "got": "^10.4.0",
+    "morgan": "^1.9.1"
   }
 }

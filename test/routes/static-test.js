@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const got = require('got');
 const App = require('../../src/index');
 
-describe('Index', () => {
+describe('Static', () => {
     const app = new App();
 
     before(async () => {
@@ -13,7 +13,7 @@ describe('Index', () => {
         await app.close();
     });
 
-    it(`should return 200 response`, async () => {
+    it(`index should return 200 response`, async () => {
         const response = await got(`http://${app.server.host}:${app.server.port}/`);
 
         expect(response.body).contain('Dashboard');
