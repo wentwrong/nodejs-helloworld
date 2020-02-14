@@ -3,6 +3,7 @@ const App = require('./server/app');
 
 if (require.main === module) {
     const app = new App();
+
     app.run();
     //const app = new MockGithubApp();
     //app.run();
