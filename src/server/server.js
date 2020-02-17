@@ -5,7 +5,7 @@ class Server {
     constructor (app, port, host) {
         this.app = app;
         this.port = port;
-        this.host =  host;
+        this.host = host;
     }
 
     _listenPromisify () {
@@ -40,7 +40,7 @@ class Server {
                     error(`Server is already in use`);
                     break;
             }
-            log(err);
+            error(err);
             throw err;
         }
     }
