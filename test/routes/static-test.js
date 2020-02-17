@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const got = require('got');
-const App = require('../../src/index');
+const App = require('../../');
 
 describe('Static', () => {
     const app = new App();

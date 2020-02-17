@@ -19,16 +19,12 @@ class ConfigExpress {
         this._setRouters();
     }
 
-    set (key, value) {
-        this.express.set(key, value);
-    }
-
     _setMiddlewares () {
         this.express.use(logger);
     }
 
     _setVariables () {
-        this.express.set('json spaces', 2);
+        this.express.set('json spaces', config.JSON_SPACES);
     }
 
     async _setRouters () {
@@ -45,6 +41,10 @@ class ConfigExpress {
             await this.server.stop();
         else
             throw new Error('Stop when application not running');
+    }
+
+    set (key, value) {
+        this.express.set(key, value);
     }
 }
 

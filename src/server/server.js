@@ -40,6 +40,7 @@ class Server {
                     error(`Server is already in use`);
                     break;
             }
+            log(err);
             throw err;
         }
     }
