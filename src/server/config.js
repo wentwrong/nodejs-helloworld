@@ -1,7 +1,4 @@
 require('dotenv').config();
-const globalErrorHandlers = require('./globerrorhandlers');
-
-globalErrorHandlers();
 
 const [ OWNER, REPO ] = process.env.REPO_SLUG ? process.env.REPO_SLUG.split('/') : [ 'DevExpress', 'testcafe' ];
 
