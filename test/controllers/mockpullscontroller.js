@@ -1,4 +1,4 @@
-const pulls = require('../mock-data/mock-pulls');
+const pulls = require('../fixtures/pulls');
 
 class MockPullsController {
     static async list (req, res) {

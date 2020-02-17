@@ -1,5 +1,5 @@
 const config = require('../../src/server/config');
-const mockPulls = require('../mock-data/mock-pulls');
+const mockPulls = require('../fixtures/pulls');
 const { expect } = require('chai');
 const got = require('got');
 const App = require('../../src/index');
