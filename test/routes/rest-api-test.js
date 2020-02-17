@@ -20,9 +20,6 @@ describe(`REST API`, () => {
 
         await app.run();
         await mockGithub.run();
-
-        await app.init();
-        await mockGithub.init();
     });
 
     after(async () => {

@@ -25,6 +25,7 @@ class ConfigExpress {
     }
 
     async run () {
+        await this.init();
         this.server = new Server(this.express, this.port, this.host);
         await this.server.start();
     }

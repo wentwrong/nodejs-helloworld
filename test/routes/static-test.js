@@ -7,7 +7,6 @@ describe('Static', () => {
 
     before(async () => {
         await app.run();
-        await app.init();
     });
 
     after(async () => {
