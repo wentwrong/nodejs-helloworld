@@ -1,25 +1,30 @@
 const config = require('../../src/server/config');
-const mockPulls = require('../fixtures/pulls');
+const pullsFixture = require('../fixtures/pulls');
 const { expect } = require('chai');
 const got = require('got');
-const App = require('../../src/index');
+const App = require('../../');
 const MockGithubApp = require('../mock-github-app');
 
 describe(`REST API`, () => {
-    const mockGithubApp = new MockGithubApp({ port: 1338 });
-    const app = new App({
-        port:          1337,
-        mockGithubUrl: `http://${mockGithubApp.host}:${mockGithubApp.port}/${config.MOCK_GITHUB_PREFIX}`
+    const mockGithub = new MockGithubApp({
+        port:      1337,
+        routesDir: config.MOCK_ROUTES_DIR
     });
+
+    const mockGithubUrl = `http://${mockGithub.host}:${mockGithub.port}/${config.MOCK_GITHUB_PREFIX}`;
+
+    const app = new App({ port: 1338 });
+
+    app.set(config.GITHUB_API_VAR_NAME, mockGithubUrl);
 
     before(async () => {
         await app.run();
-        await mockGithubApp.run();
+        await mockGithub.run();
     });
 
     after(async () => {
         await app.close();
-        await mockGithubApp.close();
+        await mockGithub.close();
     });
 
     it(`GET /api/${config.API_VERSION}/pulls/list should return correct pull requests`, async () => {
@@ -28,6 +33,6 @@ describe(`REST API`, () => {
         const response = await got(url, { responseType: 'json' });
 
         expect(response.statusCode).equal(200);
-        expect(response.body.pullRequestList).to.eql(mockPulls);
+        expect(response.body.pullRequestList).to.eql(pullsFixture);
     });
 });

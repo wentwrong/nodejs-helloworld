@@ -5,7 +5,7 @@ class Server {
     constructor (app, port, host) {
         this.app = app;
         this.port = port;
-        this.host = host;
+        this.host =  host;
     }
 
     _listenPromisify () {

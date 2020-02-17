@@ -5,7 +5,7 @@ const { Octokit } = require('@octokit/rest');
 class PullsController {
     static async list (req, res) {
         const octokit = Octokit({
-            baseUrl: req.app.get('mock-github') || config.GITHUB_API_URL
+            baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
         });
 
         const options = octokit.pulls.list.endpoint.merge({
