@@ -13,14 +13,13 @@ class ConfigExpress {
         this.host = host;
         this.server = null;
         this.routesDir = routesDir;
-
-        this._initSetting();
+        this.jsonSpaceSetting = 'json spaces';
     }
 
-    async _initSetting () {
+    async init () {
         this.express.use(logger);
 
-        this.express.set('json spaces', config.JSON_SPACES);
+        this.express.set(this.jsonSpaceSetting, config.JSON_SPACES);
 
         this.express.use(await createRoutes(this.routesDir));
     }

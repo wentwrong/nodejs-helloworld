@@ -3,10 +3,11 @@ const got = require('got');
 const App = require('../../');
 
 describe('Static', () => {
-    const app = new App();
+    const app = new App({ port: 1339 });
 
     before(async () => {
         await app.run();
+        await app.init();
     });
 
     after(async () => {

@@ -11,15 +11,18 @@ describe(`REST API`, () => {
         routesDir: config.MOCK_ROUTES_DIR
     });
 
-    const mockGithubUrl = `http://${mockGithub.host}:${mockGithub.port}/${config.MOCK_GITHUB_PREFIX}`;
-
     const app = new App({ port: 1338 });
 
-    app.set(config.GITHUB_API_VAR_NAME, mockGithubUrl);
-
     before(async () => {
+        const mockGithubUrl = `http://${mockGithub.host}:${mockGithub.port}/${config.MOCK_GITHUB_PREFIX}`;
+
+        app.set(config.GITHUB_API_VAR_NAME, mockGithubUrl);
+
         await app.run();
         await mockGithub.run();
+
+        await app.init();
+        await mockGithub.init();
     });
 
     after(async () => {
