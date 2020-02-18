@@ -1,0 +1,12 @@
+{
+    "include": [
+        "js/*",
+    ],
+    "compilerOptions": {
+        "target": "es2018",
+        "module": "system",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false
+    }
+}

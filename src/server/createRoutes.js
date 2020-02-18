@@ -6,7 +6,7 @@ const express = require('express');
 function filenameToRoute (filename, routesDir) {
     return {
         routePrefix: path.dirname(filename),
-        Router:      require(path.join('../../', routesDir, filename))
+        Router:      require(path.join(routesDir, filename))
     };
 }
 

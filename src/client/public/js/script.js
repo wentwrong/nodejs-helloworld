@@ -1,4 +1,4 @@
-class App {
+export class App {
     constructor () {
         this.pullRequestsDiv = document.querySelector('.pull-requests');
         this.renderPage();
@@ -32,5 +32,3 @@ class App {
         this.pullRequestsDiv.appendChild(pullRequestDiv);
     }
 }
-
-module.exports = App;

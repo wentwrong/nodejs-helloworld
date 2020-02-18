@@ -1,4 +1,7 @@
+import path from 'path';
+
 require('dotenv').config();
+
 
 const [ OWNER, REPO ] = process.env.REPO_SLUG ? process.env.REPO_SLUG.split('/') : [ 'DevExpress', 'testcafe' ];
 
@@ -12,9 +15,9 @@ module.exports = {
     REPO,
     API_VERSION:            'v1',
     MOCK_GITHUB_PREFIX:     'mock-github',
-    STATIC_DIR:             'src/client/public',
-    ROUTES_DIR:             'src/server/routes',
-    MOCK_ROUTES_DIR:        'test/routes',
+    STATIC_DIR:             path.join(__dirname, '../client/public'),
+    ROUTES_DIR:             path.join(__dirname, '../server/routes'),
+    MOCK_ROUTES_DIR:        path.join(__dirname, '../../test/routes'),
     JSON_SPACES:            2,
     DEFAULT_GITHUB_API_URL: 'https://api.github.com',
     GITHUB_API_VAR_NAME:    'github-api-url'

@@ -5,12 +5,22 @@
     <title>Dashboard</title>
     <meta name="description" content="Dashboard for github pull-requests notifier">
     <meta name="author" content="wentwrong">
-    <script src="script.js"></script>
+    <script type="systemjs-importmap">
+        {
+          "imports": {
+            "app": "./js/script.js"
+          }
+        }
+      </script>
+      <script type="systemjs-module" src="import:app"></script>
+      <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.js"></script>
 </head>
 
 <body>
     <div class="pull-requests">
     </div>
-    <script>new App()</script>
+    <script>
+        System.import('app').then(app => new app.App());
+    </script>
 </body>
 </html>

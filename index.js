@@ -1,5 +1,5 @@
-const App = require('./server/app');
-const globalErrorHandlers = require('./server/globerrorhandlers');
+const App = require('./src/server/app');
+const globalErrorHandlers = require('./src/server/globerrorhandlers');
 
 globalErrorHandlers();
 
