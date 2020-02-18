@@ -2,8 +2,8 @@ const { expect } = require('chai');
 const got = require('got');
 const App = require('../../');
 
-describe('Index page', () => {
-    const app = new App();
+describe('Static', () => {
+    const app = new App({ port: 1339 });
 
     before(async () => {
         await app.run();
@@ -13,10 +13,10 @@ describe('Index page', () => {
         await app.close();
     });
 
-    it('app should show "Hello Node.js" message', async () => {
-        const response = await got(`http://${app.server.host}:${app.server.port}`);
+    it(`index should return 200 response`, async () => {
+        const response = await got(`http://${app.server.host}:${app.server.port}/`);
 
+        expect(response.body).contain('Dashboard');
         expect(response.statusCode).equal(200);
-        expect(response.body).include('Hello Node.js');
     });
 });

@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndreyBelym/nodejs-katas.git"
+    "url": "git+https://github.com/wentwrong/gh-canary/"
   },
   "author": "Developer Express Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AndreyBelym/nodejs-katas/issues"
+    "url": "https://github.com/wentwrong/gh-canary/issues"
   },
-  "homepage": "https://github.com/AndreyBelym/nodejs-katas#readme",
+  "homepage": "https://github.com/wentwrong/gh-canary/#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "cross-env": "^7.0.0",
@@ -31,9 +31,12 @@
     "sinon": "^8.1.1"
   },
   "dependencies": {
+    "@octokit/rest": "^16.43.1",
     "debug": "^4.1.1",
+    "dedent": "^0.7.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "globby": "^11.0.0",
     "got": "^10.4.0"
   }
 }

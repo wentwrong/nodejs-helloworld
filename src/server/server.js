@@ -29,11 +29,18 @@ class Server {
         try {
             this.server = await this._listenPromisify();
 
-            log(`Server started on ${this.host}:${this.port}`);
+            log(`Server '${this.host}:${this.port}' started`);
         }
         catch (err) {
-            error(`Server failed to start`);
-
+            switch (err.code) {
+                case 'EACCES':
+                    error(`Server requires elevated privileges`);
+                    break;
+                case 'EADDRINUSE':
+                    error(`Server is already in use`);
+                    break;
+            }
+            error(err);
             throw err;
         }
     }
@@ -42,7 +49,7 @@ class Server {
         try {
             await this._closePromisify();
 
-            log(`Server stoped`);
+            log(`Server '${this.host}:${this.port}' stopped working`);
         }
         catch (err) {
             error('Server failed to stop');
