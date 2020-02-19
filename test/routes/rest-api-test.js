@@ -1,9 +1,9 @@
-const config = require('../../src/server/config');
-const pullsFixture = require('../fixtures/pulls');
-const { expect } = require('chai');
-const got = require('got');
-const App = require('../../');
-const MockGithubApp = require('../mock-github-app');
+import config from '../../src/server/config';
+import pullsFixture from '../fixtures/pulls';
+import { expect } from 'chai';
+import got from 'got';
+import App from '../../';
+import MockGithubApp from '../mock-github-app';
 
 describe(`REST API`, () => {
     const mockGithub = new MockGithubApp({

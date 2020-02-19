@@ -1,10 +1,9 @@
 {
     "files": [
-        "index.js"
+        "src/index.js"
     ],
     "include": [
-        "src/server/**/*",
-        "test/**/*"
+        "src/server/**/*"
     ],
     "compilerOptions": {
         "module": "commonjs",
