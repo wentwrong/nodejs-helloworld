@@ -1,12 +1,9 @@
 {
-    "include": [
-        "js/*",
-    ],
+    "extends": "../../../tsconfig",
+    "files": ["script.js"],
+    "include": [""],
     "compilerOptions": {
-        "target": "es2018",
         "module": "system",
-        "esModuleInterop": true,
-        "allowJs": true,
         "checkJs": false
     }
 }

@@ -6,9 +6,6 @@
         "src/server/**/*",
         "test/**/*"
     ],
-    "exclude": [
-        "node_modules"
-    ],
     "compilerOptions": {
         "module": "commonjs",
         "outDir": "dist",

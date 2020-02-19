@@ -2,7 +2,6 @@ import path from 'path';
 
 require('dotenv').config();
 
-
 const [ OWNER, REPO ] = process.env.REPO_SLUG ? process.env.REPO_SLUG.split('/') : [ 'DevExpress', 'testcafe' ];
 
 module.exports = {

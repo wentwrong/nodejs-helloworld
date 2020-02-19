@@ -21,7 +21,7 @@ gulp.task('transpile-server', () => {
 gulp.task('transpile-client', () => {
     return clientTs.src()
         .pipe(clientTs())
-        .js.pipe(gulp.dest(`${paths.BUILD_DIR}/src/client/public/js`));
+        .js.pipe(gulp.dest(`${paths.BUILD_DIR}/src/client/public`));
 });
 
 gulp.task('copy-html', () => {
