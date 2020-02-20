@@ -41,7 +41,7 @@ function mocha () {
 function lint ({ fix = false } = {}) {
     return require('child_process')
         .spawn(
-            `npx eslint src test *.js ${fix ? '--fix' : ''}`,
+            `npx eslint src test *.js ${fix ? '--fix' : ''} --ext .js,.ts`,
             {
                 shell: true,
                 stdio: 'inherit'

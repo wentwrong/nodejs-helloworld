@@ -1,8 +1,8 @@
-const config = require('../config');
-const debug = require('../debug');
-const { Octokit } = require('@octokit/rest');
+import { Octokit } from '@octokit/rest';
+import config from '../config';
+import debug from '../debug';
 
-class PullsController {
+export default class PullsController {
     static async list (req, res) {
         const octokit = Octokit({
             baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
@@ -35,5 +35,3 @@ class PullsController {
         return res.json({ message: 'NOT IMPLEMENTED YET' });
     }
 }
-
-module.exports = PullsController;

@@ -1,6 +1,6 @@
-const debug = require('debug');
+import debug from 'debug';
 
-module.exports = {
+export default {
     log:   debug('gh-canary:log'),
     warn:  debug('gh-canary:warn'),
     error: debug('gh-canary:error')

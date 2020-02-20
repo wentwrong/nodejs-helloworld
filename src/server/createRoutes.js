@@ -1,7 +1,7 @@
 import path from 'path';
-const globby = require('globby');
-const debug = require('./debug');
-const express = require('express');
+import globby from 'globby';
+import express from 'express';
+import debug from './debug';
 
 async function filenameToRoute (filename, routesDir) {
     const { default: router } = await import(path.resolve(path.join(routesDir, filename)));
@@ -12,7 +12,7 @@ async function filenameToRoute (filename, routesDir) {
     };
 }
 
-async function createRoutes (routesDir) {
+export default async function createRoutes (routesDir) {
     const mainRouter = express.Router();
 
     try {
@@ -21,9 +21,9 @@ async function createRoutes (routesDir) {
         const routerPromises = files
             .filter(filename => !filename.endsWith('-test.js'))
             .map(async filename => await filenameToRoute(filename, routesDir));
-        
+
         const routers = await Promise.all(routerPromises);
-        
+
         routers.map(({ routePrefix, Router }) => mainRouter.use(`/${routePrefix}`, new Router()));
 
         return mainRouter;
@@ -34,5 +34,3 @@ async function createRoutes (routesDir) {
         throw err;
     }
 }
-
-module.exports = createRoutes;

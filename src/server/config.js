@@ -1,8 +1,10 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const [ OWNER, REPO ] = process.env.REPO_SLUG ? process.env.REPO_SLUG.split('/') : [ 'DevExpress', 'testcafe' ];
 
-module.exports = {
+export default {
     PORT:                   process.env.PORT || 1337,
     MOCK_PORT:              process.env.MOCK_PORT || 1338,
     HOST:                   process.env.HOST || '127.0.0.1',

@@ -1,14 +1,12 @@
-const App = require('./server/app');
-const globalErrorHandlers = require('./server/globerrorhandlers');
+import App from './server/app';
+import globalErrorHandlers from './server/globalErrorHandlers';
 
 globalErrorHandlers();
 
 if (require.main === module) {
-    console.log(__dirname);
-
     const app = new App();
 
     app.run();
 }
 
-module.exports = App;
+export default App;

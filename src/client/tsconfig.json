@@ -1,6 +1,6 @@
 {
-    "extends": "../../../tsconfig",
-    "files": ["script.ts"],
+    "extends": "../../tsconfig",
+    "files": ["*.ts"],
     "include": ["**/*"],
     "compilerOptions": {
         "module": "system",

@@ -1,6 +1,6 @@
-const debug = require('./debug');
+import debug from './debug';
 
-module.exports = () => {
+export default () => {
     process
         .on('unhandledRejection', reason => {
             debug.error('Unhandled promise rejection');

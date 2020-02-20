@@ -1,9 +1,7 @@
-const pulls = require('../fixtures/pulls');
+import pulls from '../fixtures/pulls';
 
-class MockPullsController {
+export default class MockPullsController {
     static async list (req, res) {
         res.json(pulls);
     }
 }
-
-module.exports = MockPullsController;

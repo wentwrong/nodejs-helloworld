@@ -1,9 +1,9 @@
-import config from '../../lib/server/config';
-import pullsFixture from '../fixtures/pulls';
 import { expect } from 'chai';
 import got from 'got';
+import config from '../../lib/server/config';
+import pullsFixture from '../fixtures/pulls';
 import App from '../../';
-import MockGithubApp from '../mock-github-app';
+import MockGithubApp from '../mockGithubApp';
 
 describe(`REST API`, () => {
     const mockGithub = new MockGithubApp({

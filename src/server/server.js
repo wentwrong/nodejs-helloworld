@@ -1,7 +1,7 @@
-const { once } = require('events');
-const { log, error } = require('./debug');
+import { once } from 'events';
+import debug from './debug';
 
-class Server {
+export default class Server {
     constructor (app, port, host) {
         this.app = app;
         this.port = port;
@@ -29,18 +29,18 @@ class Server {
         try {
             this.server = await this._listenPromisify();
 
-            log(`Server '${this.host}:${this.port}' started`);
+            debug.log(`Server '${this.host}:${this.port}' started`);
         }
         catch (err) {
             switch (err.code) {
                 case 'EACCES':
-                    error(`Server requires elevated privileges`);
+                    debug.error(`Server requires elevated privileges`);
                     break;
                 case 'EADDRINUSE':
-                    error(`Server is already in use`);
+                    debug.error(`Server is already in use`);
                     break;
             }
-            error(err);
+            debug.error(err);
             throw err;
         }
     }
@@ -49,14 +49,12 @@ class Server {
         try {
             await this._closePromisify();
 
-            log(`Server '${this.host}:${this.port}' stopped working`);
+            debug.log(`Server '${this.host}:${this.port}' stopped working`);
         }
         catch (err) {
-            error('Server failed to stop');
+            debug.error('Server failed to stop');
 
             throw err;
         }
     }
 }
-
-module.exports = Server;

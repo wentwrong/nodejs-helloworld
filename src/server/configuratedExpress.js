@@ -1,12 +1,12 @@
-const config = require('./config');
-const logger = require('./middleware/logger');
-const Server = require('./server');
-const express = require('express');
-const createRoutes = require('./createRoutes');
+import express from 'express';
+import config from './config';
+import logger from './middleware/logger';
+import Server from './server';
+import createRoutes from './createRoutes';
 
 // TODO:
 // inherit from express app when we move to Typescript
-class ConfigExpress {
+export default class ConfiguratedExpress {
     constructor ({ port = config.PORT, host = config.HOST, routesDir = config.ROUTES_DIR } = {}) {
         this.express = express();
         this.port = port;
@@ -41,5 +41,3 @@ class ConfigExpress {
         this.express.set(key, value);
     }
 }
-
-module.exports = ConfigExpress;
