@@ -1,4 +1,4 @@
-const ConfigExpress = require('../src/server/configexpress');
+const ConfigExpress = require('../lib/server/configExpress');
 
 class MockGithubApp extends ConfigExpress {
     constructor (...props) {

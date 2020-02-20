@@ -1,31 +1,26 @@
-const { dest, src, series, parallel } = require('gulp');
+const { dest, series, parallel } = require('gulp');
 const del = require('del');
 const ts = require('gulp-typescript');
 
 const paths = {
-    BUILD_DIR:  'dist',
-    CLIENT_DIR: 'src/client/public',
+    BUILD_DIR:  'lib',
+    CLIENT_DIR: 'client',
     TESTS_DIR:  'test'
 };
 
 const serverTs = ts.createProject('tsconfig.json');
-const clientTs = ts.createProject(`${paths.CLIENT_DIR}/tsconfig.json`);
+const clientTs = ts.createProject(`src/${paths.CLIENT_DIR}/tsconfig.json`);
 
 function transpileServer () {
     return serverTs.src()
         .pipe(serverTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/src`));
+        .js.pipe(dest(`${paths.BUILD_DIR}`));
 }
 
 function transpileClient () {
     return clientTs.src()
         .pipe(clientTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/src/client/public`));
-}
-
-function copyhtml () {
-    return src([`${paths.CLIENT_DIR}/*.html`])
-        .pipe(dest(`${paths.BUILD_DIR}/${paths.CLIENT_DIR}`));
+        .js.pipe(dest(`${paths.BUILD_DIR}/client`));
 }
 
 async function clean () {
@@ -55,7 +50,7 @@ function lint ({ fix = false } = {}) {
 }
 
 const buildServer = transpileServer;
-const buildClient = parallel(copyhtml, transpileClient);
+const buildClient = transpileClient;
 
 exports['clean'] = clean;
 exports['build'] = series(clean, parallel(buildServer, buildClient));

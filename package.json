@@ -2,9 +2,9 @@
   "name": "gh-canary",
   "version": "1.0.0",
   "description": "Dashboard for github PR bot notifier",
-  "main": "dist/src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "node lib/index.js",
     "start-debug": "cross-env DEBUG=gh-canary:* npm run start",
     "build": "gulp build",
     "lint": "gulp lint",

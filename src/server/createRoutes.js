@@ -1,12 +1,14 @@
-const path = require('path');
+import path from 'path';
 const globby = require('globby');
 const debug = require('./debug');
 const express = require('express');
 
-function filenameToRoute (filename, routesDir) {
+async function filenameToRoute (filename, routesDir) {
+    const { default: router } = await import(path.resolve(path.join(routesDir, filename)));
+
     return {
         routePrefix: path.dirname(filename),
-        Router:      require(path.join(routesDir, filename))
+        Router:      router
     };
 }
 
@@ -14,13 +16,15 @@ async function createRoutes (routesDir) {
     const mainRouter = express.Router();
 
     try {
-        const files = await globby('**/*.js', { cwd: path.resolve(routesDir) });
+        const files = await globby('**/*.js', { cwd: routesDir });
 
-        files
+        const routerPromises = files
             .filter(filename => !filename.endsWith('-test.js'))
-            .map(filename => filenameToRoute(filename, routesDir))
-            .filter(({ Router }) => Object.getPrototypeOf(Router) === express.Router)
-            .map(({ routePrefix, Router }) => mainRouter.use(`/${routePrefix}`, new Router()));
+            .map(async filename => await filenameToRoute(filename, routesDir));
+        
+        const routers = await Promise.all(routerPromises);
+        
+        routers.map(({ routePrefix, Router }) => mainRouter.use(`/${routePrefix}`, new Router()));
 
         return mainRouter;
     }

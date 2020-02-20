@@ -1,7 +1,7 @@
 const express = require('express');
 const PullsController = require('../../../../controllers/pullscontroller');
 
-class PullsRouter extends express.Router {
+export default class PullsRouter extends express.Router {
     constructor (...props) {
         super(...props);
 
@@ -9,5 +9,3 @@ class PullsRouter extends express.Router {
             .post('/addComment', PullsController.addComment);
     }
 }
-
-module.exports = PullsRouter;

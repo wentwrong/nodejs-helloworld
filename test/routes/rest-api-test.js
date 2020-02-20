@@ -1,4 +1,4 @@
-import config from '../../src/server/config';
+import config from '../../lib/server/config';
 import pullsFixture from '../fixtures/pulls';
 import { expect } from 'chai';
 import got from 'got';

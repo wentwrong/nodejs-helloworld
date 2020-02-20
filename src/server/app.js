@@ -1,5 +1,5 @@
 const config = require('./config');
-const ConfigExpress = require('./configexpress');
+const ConfigExpress = require('./configExpress');
 const express = require('express');
 
 class App extends ConfigExpress {
@@ -10,6 +10,7 @@ class App extends ConfigExpress {
 
     _setMiddlewares () {
         this.express.use(express.static(config.STATIC_DIR));
+        this.express.use(express.static(config.CLIENT_SCRIPTS_DIR));
     }
 }
 
