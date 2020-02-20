@@ -7,9 +7,9 @@
     "start": "node dist/src/index.js",
     "start-debug": "cross-env DEBUG=gh-canary:* npm run start",
     "build": "gulp build",
-    "lint": "eslint src test *.js",
-    "lint-fix": "npm run lint -- --fix",
-    "test": "npm run lint && mocha -r ts-node/register test/**/*-test.*",
+    "lint": "gulp lint",
+    "lint-fix": "gulp lint-fix",
+    "test": "npm run lint && gulp test",
     "test-debug": "cross-env DEBUG=gh-canary:* npm test"
   },
   "repository": {

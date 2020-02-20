@@ -32,8 +32,33 @@ async function clean () {
     await del([paths.BUILD_DIR]);
 }
 
+function mocha () {
+    return require('child_process')
+        .spawn(
+            'npx mocha -r ts-node/register test/**/*-test.*',
+            {
+                shell: true,
+                stdio: 'inherit'
+            }
+        );
+}
+
+function lint ({ fix = false } = {}) {
+    return require('child_process')
+        .spawn(
+            `npx eslint src test *.js ${fix ? '--fix' : ''}`,
+            {
+                shell: true,
+                stdio: 'inherit'
+            }
+        );
+}
+
 const buildServer = transpileServer;
 const buildClient = parallel(copyhtml, transpileClient);
 
-exports.clean = clean;
-exports.build = series(clean, parallel(buildServer, buildClient));
+exports['clean'] = clean;
+exports['build'] = series(clean, parallel(buildServer, buildClient));
+exports['test'] = mocha;
+exports['lint'] = lint;
+exports['lint-fix'] = () => lint({ fix: true });

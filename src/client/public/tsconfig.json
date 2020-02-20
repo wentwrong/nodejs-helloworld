@@ -1,9 +1,10 @@
 {
     "extends": "../../../tsconfig",
-    "files": ["script.js"],
-    "include": [""],
+    "files": ["script.ts"],
+    "include": ["**/*"],
     "compilerOptions": {
         "module": "system",
-        "checkJs": false
+        "checkJs": false,
+        "outFile": "bundle.js"
     }
 }
