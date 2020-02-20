@@ -1,6 +1,6 @@
-const debug = require('../debug');
+import debug from '../debug';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
     res.on('finish', () => {
         const utfDateTime = new Date().toUTCString();
 

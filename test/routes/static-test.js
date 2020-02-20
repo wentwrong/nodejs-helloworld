@@ -1,9 +1,9 @@
-const { expect } = require('chai');
-const got = require('got');
-const App = require('../../');
+import { expect } from 'chai';
+import got from 'got';
+import App from '../../';
 
 describe('Static', () => {
-    const app = new App({ port: 1339 });
+    const app = new App();
 
     before(async () => {
         await app.run();

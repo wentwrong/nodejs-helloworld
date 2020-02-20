@@ -1,0 +1,15 @@
+{
+    "files": [
+        "src/index.js"
+    ],
+    "include": [
+        "src/server/**/*"
+    ],
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "lib",
+        "target": "es2018",
+        "esModuleInterop": true,
+        "allowJs": true
+    }
+}

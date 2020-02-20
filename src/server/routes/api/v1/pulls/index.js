@@ -1,13 +1,12 @@
-const express = require('express');
-const PullsController = require('../../../../controllers/pullscontroller');
+import express from 'express';
+import PullsController from '../../../../controllers/pullsController';
 
-class PullsRouter extends express.Router {
+export default class PullsRouter extends express.Router {
     constructor (...props) {
         super(...props);
 
-        this.get('/list', PullsController.list)
+        this
+            .get('/list', PullsController.list)
             .post('/addComment', PullsController.addComment);
     }
 }
-
-module.exports = PullsRouter;

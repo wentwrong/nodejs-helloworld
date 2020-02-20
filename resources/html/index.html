@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta name="description" content="Dashboard for github pull-requests notifier">
+    <meta name="author" content="wentwrong">
+    <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/system.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs/dist/extras/named-register.js"></script>
+    <script type="systemjs-importmap">
+        {
+          "imports": {
+            "dedent": "https://www.unpkg.com/dedent@0.7.0/dist/dedent.js",
+            "debug": "https://unpkg.com/debug@4.1.1/dist/debug.js"
+          }
+        }
+    </script>
+    <script src="bundle.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    Loading...
+  </div>
+
+  <script>
+    (async () => {
+      const { default: App } = await System.import('script');
+      const app = new App();
+
+      await app.render();
+    })()
+  </script>
+</body>
+</html>
