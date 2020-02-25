@@ -5,6 +5,12 @@ import debugFactory from './debug';
 
 const debug = debugFactory('server');
 
+/**
+ * Wrapper for encapsulating express server old-style 'async based on events subscription' functions
+ *
+ * @export
+ * @class Server
+ */
 export default class Server {
     private server?: NetServer;
 
@@ -14,12 +20,30 @@ export default class Server {
         public host: string
     ) { }
 
+    /**
+     * Async-wrapper for converting old-style 'async based on events subscription' to Promises
+     *
+     * Starts express server
+     *
+     * @private
+     * @returns {Promise<NetServer>}
+     * @memberof Server
+     */
     private listenPromisify (): Promise<NetServer> {
         const netServer = this.app.listen(this.port);
 
         return once(netServer, 'listening').then(() => netServer);
     }
 
+    /**
+     * Async-wrapper for converting old-style 'async based on events subscription' to Promises
+     *
+     * Close server if exists
+     *
+     * @private
+     * @returns {Promise<void[]>}
+     * @memberof Server
+     */
     private closePromisify (): Promise<void[]> {
         if (this.server) {
             const netServer = this.server.close();
@@ -30,6 +54,13 @@ export default class Server {
         return Promise.reject(new Error('Server instance not found'));
     }
 
+
+    /**
+     * Start server
+     *
+     * @returns {Promise<void>}
+     * @memberof Server
+     */
     async start (): Promise<void> {
         try {
             this.server = await this.listenPromisify();
@@ -50,6 +81,12 @@ export default class Server {
         }
     }
 
+    /**
+     * Stop server
+     *
+     * @returns {Promise<void>}
+     * @memberof Server
+     */
     async stop (): Promise<void> {
         try {
             await this.closePromisify();

@@ -6,6 +6,13 @@ import { Route, createExpressRouter } from './router';
 
 const debug = debugFactory('router');
 
+/**
+ * Import router file from passed `@routesDir`
+ *
+ * @param {string} filename
+ * @param {string} routesDir
+ * @returns {Route}
+ */
 function filenameToRoute (filename: string, routesDir: string): Route {
     const { default: router } = require(path.resolve(path.join(routesDir, filename)));
 
@@ -17,6 +24,19 @@ function filenameToRoute (filename: string, routesDir: string): Route {
     };
 }
 
+/**
+ * Maps router files to endpoint-paths based on file location inside `routesDir`
+ *
+ * Example:
+ *
+ * file     `routes/api/v1/pulls/index.ts`
+ * maps to
+ * endpoint `/api/v1/pulls`
+ *
+ * @export
+ * @param {string} routesDir
+ * @returns {Promise<express.Router>}
+ */
 export default async function createRoutes (routesDir: string): Promise<express.Router> {
     const mainRouter = express.Router();
 

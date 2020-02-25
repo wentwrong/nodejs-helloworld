@@ -6,6 +6,13 @@ interface DebugFunctions {
     error: debug.Debugger;
 }
 
+/**
+ * Creates object with debug functions which are logged with sybsystem mention
+ *
+ * @export
+ * @param {string} subsystem
+ * @returns {DebugFunctions}
+ */
 export default function debugFactory (subsystem: string): DebugFunctions {
     return {
         log:   debug(`gh-canary:${subsystem}:log`),

@@ -9,9 +9,7 @@ const APP_ROOT: string = path.join(__dirname, '../../');
 
 export default {
     PORT:                   process.env.PORT || 1337,
-    MOCK_PORT:              process.env.MOCK_PORT || 1338,
     HOST:                   process.env.HOST || '127.0.0.1',
-    MOCK_HOST:              process.env.MOCK_HOST || '127.0.0.1',
     NODE_ENV:               process.env.NODE_ENV || 'production',
     OWNER,
     REPO,

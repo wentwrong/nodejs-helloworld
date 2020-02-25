@@ -7,6 +7,15 @@ import { PullRequest } from '../../shared/interfaces/pullRequests';
 const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
+    /**
+     * Make a request to github API for all pull requests fetching and return it to user
+     *
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @returns {Promise<void>}
+     * @memberof PullsController
+     */
     static async list (req: express.Request, res: express.Response): Promise<void> {
         const octokit = new Octokit({
             baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
