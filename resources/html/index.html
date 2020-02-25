@@ -25,7 +25,7 @@
 
   <script>
     (async () => {
-      const { default: App } = await System.import('script');
+      const { default: App } = await System.import('client/script');
       const app = new App();
 
       await app.render();

@@ -1,8 +1,10 @@
-export function createErrorPage () {
+import { PullRequestList } from '../shared/interfaces/pullRequests';
+
+export function createErrorPage (): string {
     return '<b>OOOPS! ERROR OCCURED!</b>';
 }
 
-export function createPullsPage ({ pullRequestList }: any) {
+export function createPullsPage ({ pullRequestList }: PullRequestList): string {
     return pullRequestList
         .map(pullrequest =>
             `<p>

@@ -4,9 +4,11 @@
       "node": true,
       "mocha": true
     },
-    "parser": "@typescript-eslint/parser",
+    "parser": "@typescript-eslint/parser",  
+    "plugins": ["@typescript-eslint"],
     "parserOptions": {
-      "sourceType": "module"
+      "sourceType": "module",
+      "project": "tsconfig.json"
     },
     "extends": [
       "eslint:recommended"
@@ -93,11 +95,31 @@
       "space-before-function-paren": [2, "always"],
       "handle-callback-err": 0,
       "linebreak-style": [2, "unix"],
-      "no-duplicate-imports": 2,
-      "no-extra-parens": 2,
-      "no-use-before-define": [2, "nofunc"],
-      "no-var-requires": [0],
-      "no-unused-vars": 2
-    }
+      "no-duplicate-imports": 2
+    },
+    "overrides": [
+      {
+        "files": ["**/*.js"],
+        "rules": {
+          "no-extra-parens": 2,
+          "no-use-before-define": [2, "nofunc"],
+          "no-unused-vars": 2
+        }
+      },
+      {
+        "files": ["**/*.ts"],
+        "extends": [
+          "plugin:@typescript-eslint/recommended"
+        ],
+        "rules": {
+          "@typescript-eslint/no-extra-parens": 2,
+          "@typescript-eslint/no-use-before-define": [2, "nofunc"],
+          "@typescript-eslint/no-var-requires": [0],
+          "@typescript-eslint/explicit-function-return-type": [2, { "allowExpressions": true }],
+          "@typescript-eslint/no-unused-vars": 2,
+          "@typescript-eslint/prefer-includes": 2,
+          "@typescript-eslint/no-throw-literal": 2
+        }
+      }
+    ]
 }
-  

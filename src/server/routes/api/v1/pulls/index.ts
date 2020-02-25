@@ -1,11 +1,15 @@
 import express from 'express';
 import PullsController from '../../../../controllers/pullsController';
 
-export default class PullsRouter extends express.Router {
-    constructor (...props) {
-        super(...props);
-
-        this
+/**
+ * Router that maps endpoint-paths with suitable controller methods
+ *
+ * @export
+ * @class PullsRouter
+ */
+export default class PullsRouter {
+    static init (): express.Router {
+        return express.Router()
             .get('/list', PullsController.list)
             .post('/addComment', PullsController.addComment);
     }

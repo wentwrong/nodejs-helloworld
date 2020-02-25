@@ -1,6 +1,8 @@
-import debug from './debug';
+import debugFactory from './debug';
 
-export default () => {
+const debug = debugFactory('global-error-handlers');
+
+export default (): void => {
     process
         .on('unhandledRejection', reason => {
             debug.error('Unhandled promise rejection');
