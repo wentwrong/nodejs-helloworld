@@ -1,4 +1,6 @@
-import debug from './debug';
+import debugFactory from './debug';
+
+const debug = debugFactory('global-error-handlers');
 
 export default (): void => {
     process

@@ -1,5 +1,7 @@
 import express from 'express';
-import debug from '../debug';
+import debugFactory from '../debug';
+
+const debug = debugFactory('http');
 
 export default function customLogger (req: express.Request, res: express.Response, next: express.NextFunction): void {
     res.on('finish', () => {

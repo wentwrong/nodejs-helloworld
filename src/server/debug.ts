@@ -1,7 +1,15 @@
 import debug from 'debug';
 
-export default {
-    log:   debug('gh-canary:log'),
-    warn:  debug('gh-canary:warn'),
-    error: debug('gh-canary:error')
-};
+interface DebugFunctions {
+    log: debug.Debugger;
+    warn: debug.Debugger;
+    error: debug.Debugger;
+}
+
+export default function debugFactory (subsystem: string): DebugFunctions {
+    return {
+        log:   debug(`gh-canary:${subsystem}:log`),
+        warn:  debug(`gh-canary:${subsystem}:warn`),
+        error: debug(`gh-canary:${subsystem}:error`)
+    };
+}

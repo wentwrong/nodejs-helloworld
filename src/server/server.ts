@@ -1,7 +1,9 @@
 import { Server as NetServer } from 'net';
 import { once } from 'events';
 import express from 'express';
-import debug from './debug';
+import debugFactory from './debug';
+
+const debug = debugFactory('server');
 
 export default class Server {
     private server?: NetServer;

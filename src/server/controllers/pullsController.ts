@@ -1,8 +1,10 @@
 import express from 'express';
 import { Octokit } from '@octokit/rest';
 import config from '../config';
-import debug from '../debug';
+import debugFactory from '../debug';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
+
+const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
     static async list (req: express.Request, res: express.Response): Promise<void> {

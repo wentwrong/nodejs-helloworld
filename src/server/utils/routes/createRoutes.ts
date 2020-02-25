@@ -1,11 +1,15 @@
 import path from 'path';
 import globby from 'globby';
 import express from 'express';
-import debug from '../../debug';
+import debugFactory from '../../debug';
 import { Route, createExpressRouter } from './router';
+
+const debug = debugFactory('router');
 
 function filenameToRoute (filename: string, routesDir: string): Route {
     const { default: router } = require(path.resolve(path.join(routesDir, filename)));
+
+    debug.log(`Created route '/${path.dirname(filename)}' from file '${path.join(routesDir, filename)}'`);
 
     return {
         routePrefix: path.dirname(filename),
