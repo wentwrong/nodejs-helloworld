@@ -3,24 +3,41 @@ const del = require('del');
 const ts = require('gulp-typescript');
 
 const paths = {
-    BUILD_DIR:  'lib',
-    CLIENT_DIR: 'client',
-    TESTS_DIR:  'test'
+    BUILD_DIR:   'lib',
+    CLIENT_DIR:  'client',
+    SERVER_DIR:  'server',
+    SHARED_DIR:  'shared',
+    TESTS_DIR:   'test',
+    MOCK_GITHUB: 'mock-github'
 };
 
-const serverTs = ts.createProject('tsconfig.json');
+const serverTs = ts.createProject(`src/${paths.SERVER_DIR}/tsconfig.json`);
 const clientTs = ts.createProject(`src/${paths.CLIENT_DIR}/tsconfig.json`);
+const sharedTs = ts.createProject(`src/${paths.SHARED_DIR}/tsconfig.json`);
+const mockGithubTs = ts.createProject(`src/${paths.MOCK_GITHUB}/tsconfig.json`);
 
 function transpileServer () {
     return serverTs.src()
         .pipe(serverTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}`));
+        .js.pipe(dest(`${paths.BUILD_DIR}/server`));
+}
+
+function transpileShared () {
+    return sharedTs.src()
+        .pipe(sharedTs())
+        .js.pipe(dest(`${paths.BUILD_DIR}/shared`));
 }
 
 function transpileClient () {
     return clientTs.src()
         .pipe(clientTs())
         .js.pipe(dest(`${paths.BUILD_DIR}/client`));
+}
+
+function transpileMockGithub () {
+    return mockGithubTs.src()
+        .pipe(mockGithubTs())
+        .js.pipe(dest(`${paths.BUILD_DIR}/mock-github`));
 }
 
 async function clean () {
@@ -41,7 +58,7 @@ function mocha () {
 function lint ({ fix = false } = {}) {
     return require('child_process')
         .spawn(
-            `npx eslint src test *.js ${fix ? '--fix' : ''} --ext .js,.ts`,
+            `npx eslint src test Gulpfile.js ${fix ? '--fix' : ''} --ext .js,.ts`,
             {
                 shell: true,
                 stdio: 'inherit'
@@ -51,9 +68,11 @@ function lint ({ fix = false } = {}) {
 
 const buildServer = transpileServer;
 const buildClient = transpileClient;
+const buildShared = transpileShared;
+const buildMockGithub = transpileMockGithub;
 
 exports['clean'] = clean;
-exports['build'] = series(clean, parallel(buildServer, buildClient));
+exports['build'] = series(clean, parallel(buildServer, buildClient, buildShared, buildMockGithub));
 exports['test'] = mocha;
 exports['lint'] = lint;
 exports['lint-fix'] = () => lint({ fix: true });

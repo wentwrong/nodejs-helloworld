@@ -1,6 +1,6 @@
 import debug from './debug';
 
-export default () => {
+export default (): void => {
     process
         .on('unhandledRejection', reason => {
             debug.error('Unhandled promise rejection');

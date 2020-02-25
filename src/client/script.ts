@@ -1,11 +1,13 @@
+import { PullRequestList } from '../shared/interfaces/pullRequests';
 import { createPullsPage, createErrorPage } from './templates';
-import pullsController from './controllers/pullscontroller';
+import pullsController from './controllers/pullsController';
 
 export default class App {
-    async render () {
+    async render (): Promise<void> {
         try {
-            const pulls: any = await pullsController.list();
+            const pulls: PullRequestList = await pullsController.list();
 
+            console.log(pulls);
             this.setRoot(createPullsPage(pulls));
         }
         catch (err) {
@@ -13,7 +15,12 @@ export default class App {
         }
     }
 
-    private setRoot (html: string) {
-        document.getElementById('root').innerHTML = html;
+    private setRoot (html: string): void {
+        const output = document?.getElementById('root');
+
+        if (output)
+            output.innerHTML = html;
+        else
+            throw new Error('Div with id = root was not found');
     }
 }

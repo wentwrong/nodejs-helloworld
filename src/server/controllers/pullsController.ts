@@ -1,10 +1,12 @@
+import express from 'express';
 import { Octokit } from '@octokit/rest';
 import config from '../config';
 import debug from '../debug';
+import { PullRequest } from '../../shared/interfaces/pullRequests';
 
 export default class PullsController {
-    static async list (req, res) {
-        const octokit = Octokit({
+    static async list (req: express.Request, res: express.Response): Promise<void> {
+        const octokit = new Octokit({
             baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
         });
 
@@ -16,8 +18,10 @@ export default class PullsController {
         try {
             const pullRequests = [];
 
-            for await (const page of octokit.paginate.iterator(options))
-                pullRequests.push(page['data'].filter(pr => pr['author_association'] === 'NONE'));
+            for await (const page of octokit.paginate.iterator(options)) {
+                pullRequests.push(page['data']
+                    .filter((pr: PullRequest) => pr['author_association'] === 'NONE'));
+            }
 
             res.send({ pullRequestList: pullRequests.flat() });
         }
@@ -31,7 +35,7 @@ export default class PullsController {
         }
     }
 
-    static async addComment (req, res) {
-        return res.json({ message: 'NOT IMPLEMENTED YET' });
+    static async addComment (req: express.Request, res: express.Response): Promise<void> {
+        res.json({ message: 'NOT IMPLEMENTED YET' });
     }
 }

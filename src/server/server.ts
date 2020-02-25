@@ -1,20 +1,24 @@
+import { Server as NetServer } from 'net';
 import { once } from 'events';
+import express from 'express';
 import debug from './debug';
 
 export default class Server {
-    constructor (app, port, host) {
-        this.app = app;
-        this.port = port;
-        this.host = host;
-    }
+    private server?: NetServer;
 
-    _listenPromisify () {
+    constructor (
+        public app: express.Application,
+        public port: number | string,
+        public host: string
+    ) { }
+
+    private listenPromisify (): Promise<NetServer> {
         const netServer = this.app.listen(this.port);
 
         return once(netServer, 'listening').then(() => netServer);
     }
 
-    _closePromisify () {
+    private closePromisify (): Promise<void[]> {
         if (this.server) {
             const netServer = this.server.close();
 
@@ -22,12 +26,11 @@ export default class Server {
         }
 
         return Promise.reject(new Error('Server instance not found'));
-
     }
 
-    async start () {
+    async start (): Promise<void> {
         try {
-            this.server = await this._listenPromisify();
+            this.server = await this.listenPromisify();
 
             debug.log(`Server '${this.host}:${this.port}' started`);
         }
@@ -45,9 +48,9 @@ export default class Server {
         }
     }
 
-    async stop () {
+    async stop (): Promise<void> {
         try {
-            await this._closePromisify();
+            await this.closePromisify();
 
             debug.log(`Server '${this.host}:${this.port}' stopped working`);
         }

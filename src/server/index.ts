@@ -1,5 +1,5 @@
-import App from './server/app';
-import globalErrorHandlers from './server/globalErrorHandlers';
+import App from './app';
+import globalErrorHandlers from './globalErrorHandlers';
 
 globalErrorHandlers();
 

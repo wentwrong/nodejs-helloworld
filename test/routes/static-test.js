@@ -14,7 +14,7 @@ describe('Static', () => {
     });
 
     it(`index should return 200 response`, async () => {
-        const response = await got(`http://${app.server.host}:${app.server.port}/`);
+        const response = await got(`http://${app.config.host}:${app.config.port}/`);
 
         expect(response.body).contain('Dashboard');
         expect(response.statusCode).equal(200);
