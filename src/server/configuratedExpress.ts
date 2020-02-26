@@ -32,6 +32,10 @@ export default class ConfiguratedExpress {
     private async init (): Promise<void> {
         this.express.use(logger);
 
+        this.express.use(express.json());
+
+        this.express.use(express.urlencoded({ extended: true }));
+
         this.express.set(config.JSON_SETTING_NAME, config.JSON_SPACES);
 
         this.express.use(await createRoutes(this.config.routesDir));

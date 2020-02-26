@@ -2,7 +2,7 @@
     "extends": "../../tsconfig",
     "compilerOptions": {
         "module": "system",
-        "checkJs": false,
+        "esModuleInterop": true,
         "outFile": "bundle.js"
     }
 }
