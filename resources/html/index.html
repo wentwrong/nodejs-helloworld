@@ -25,7 +25,10 @@
   </div>
   <script>
     (async () => {
-      await System.import('debug');
+      const { default: globalClientErrorHandlers } = await System.import('shared/globalErrorHandlers');
+
+      await globalClientErrorHandlers();
+
       const { default: App } = await System.import('client/script');
 
       const app = new App();

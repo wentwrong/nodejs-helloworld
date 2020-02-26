@@ -2,15 +2,10 @@ import { PullRequestList } from '../shared/interfaces/pullRequests';
 import { createPullsPage, createErrorPage } from './templates';
 import pullsController from './controllers/pullsController';
 import debugFactory from '../shared/debugFactory';
-import globalErrorHandlers from '../shared/globalErrorHandlers';
 
 const debug = debugFactory('client');
 
 export default class App {
-    constructor () {
-        globalErrorHandlers();
-    }
-
     async render (): Promise<void> {
         try {
             const pulls: PullRequestList = await pullsController.list();
