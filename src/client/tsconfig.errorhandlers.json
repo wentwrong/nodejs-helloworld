@@ -1,8 +1,9 @@
 {
     "extends": "../../tsconfig",
+    "files": ["../shared/globalErrorHandlers.ts"],
     "compilerOptions": {
         "module": "system",
         "esModuleInterop": true,
-        "outFile": "client/bundle.js"
+        "outFile": "client/errorhandlers.js"
     }
 }
