@@ -1,9 +1,25 @@
 import { PullRequestList } from '../../shared/interfaces/pullRequests';
+import debugFactory from '../../shared/debugFactory';
+
+const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
     static async list (): Promise<PullRequestList> {
-        const response = await fetch('api/v1/pulls/list');
+        try {
+            const response = await fetch('api/v1/pulls/list');
 
-        return await response.json();
+            const pulls = await response.json();
+
+            debug.log(`Fetched ${pulls.pullRequestList.length} pull requests`);
+            debug.log(pulls);
+
+            return pulls;
+        }
+        catch (err) {
+            debug.error('Error occured when fetching Pull Requests');
+            debug.error(err);
+
+            throw err;
+        }
     }
 }

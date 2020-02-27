@@ -1,23 +1,15 @@
 import { PullRequestList } from '../shared/interfaces/pullRequests';
 import { createPullsPage, createErrorPage } from './templates';
 import pullsController from './controllers/pullsController';
-import debugFactory from '../shared/debugFactory';
-
-const debug = debugFactory('client');
 
 export default class App {
     async render (): Promise<void> {
         try {
             const pulls: PullRequestList = await pullsController.list();
 
-            debug.log(`Fetched ${pulls.pullRequestList.length} pull requests`);
-            debug.log(pulls);
-
             this.setRoot(createPullsPage(pulls));
         }
         catch (err) {
-            debug.error('Error occured when fetching Pull Requests');
-            debug.error(err);
             this.setRoot(createErrorPage());
             throw err;
         }
