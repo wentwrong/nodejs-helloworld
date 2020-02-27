@@ -1,5 +1,7 @@
 {
     "extends": "../../tsconfig",
+    "include": ["**/*"],
+    "exclude": ["errorhandlers.ts"],
     "compilerOptions": {
         "module": "system",
         "esModuleInterop": true,

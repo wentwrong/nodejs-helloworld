@@ -1,6 +1,6 @@
 {
     "extends": "../../tsconfig",
-    "files": ["../shared/globalErrorHandlers.ts"],
+    "files": ["errorhandlers.ts"],
     "compilerOptions": {
         "module": "system",
         "esModuleInterop": true,
