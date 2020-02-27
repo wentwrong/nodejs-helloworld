@@ -23,7 +23,7 @@ function transpileServer () {
         .pipe(sourcemaps.init())
         .pipe(serverTs()).js
         .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.BUILD_DIR}/server`));
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileShared () {
@@ -32,7 +32,7 @@ function transpileShared () {
         .pipe(sourcemaps.init())
         .pipe(sharedTs()).js
         .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.BUILD_DIR}/shared`));
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileClient () {
@@ -41,7 +41,7 @@ function transpileClient () {
         .pipe(sourcemaps.init())
         .pipe(clientTs()).js
         .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.BUILD_DIR}/client`));
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileMockGithub () {
@@ -50,7 +50,7 @@ function transpileMockGithub () {
         .pipe(sourcemaps.init())
         .pipe(mockGithubTs()).js
         .pipe(sourcemaps.write('.'))
-        .pipe(dest(`${paths.BUILD_DIR}/mock-github`));
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 async function clean () {

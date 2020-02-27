@@ -5,6 +5,6 @@
     "compilerOptions": {
         "module": "system",
         "esModuleInterop": true,
-        "outFile": "bundle.js"
+        "outFile": "client/bundle.js"
     }
 }
