@@ -5,6 +5,18 @@
     <title>Dashboard</title>
     <meta name="description" content="Dashboard for github pull-requests notifier">
     <meta name="author" content="wentwrong">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Compiled and minified materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Icons for materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- SystemJS sources for in-browser modules support -->
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/system.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/named-register.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/amd.js"></script>
@@ -12,27 +24,45 @@
     <script type="systemjs-importmap">
       {
         "imports": {
-          "debug": "https://unpkg.com/debug@4.1.1/dist/debug.js"
+          "debug": "https://unpkg.com/debug@4.1.1/dist/debug.js",
+          "moment": "https://unpkg.com/moment@2.24.0/moment.js",
+          "dedent": "https://www.unpkg.com/dedent@0.7.0/dist/dedent.js"
         }
       }
-  </script>
+    </script>
+    
+    <!-- Compiled bundle with client-side logic -->
     <script src="bundle.js"></script>
 </head>
 
-<body>
-  <div id="root">
-    Loading...
-  </div>
+<body class="brown lighten-5">
+  <div class="container"> 
+      
+      <!-- Reload button -->
+      <div class="col s12">
+        <a class="waves-effect waves-light btn-large" id="reload-btn">
+          <i class="material-icons left">refresh</i>
+          Reload
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- App root -->
+      <div class="col s12">
+        <div id="root">
+        </div>
+      </div>
+    </div>
   <script>
     (async () => {
       const { default: globalClientErrorHandlers } = await System.import('shared/globalErrorHandlers');
-
       await globalClientErrorHandlers();
 
       const { default: App } = await System.import('client/script');
-
       const app = new App();
 
+      await app.init();
       await app.render();
     })()
   </script>
