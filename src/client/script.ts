@@ -1,17 +1,22 @@
 import { PullRequestList } from '../shared/interfaces/pullRequests';
-import { createPullsPage, createErrorPage } from './templates';
+import { createPullsPage } from './templates';
 import pullsController from './controllers/pullsController';
+import errorRegister from '../shared/errorRegister';
+import debugFactory from '../shared/debugFactory';
+
+const debug = debugFactory('app');
 
 export default class App {
     async render (): Promise<void> {
         try {
             const pulls: PullRequestList = await pullsController.list();
 
-            console.log(pulls);
             this.setRoot(createPullsPage(pulls));
         }
         catch (err) {
-            this.setRoot(createErrorPage());
+            debug.error(err);
+
+            await errorRegister(err.stack);
         }
     }
 

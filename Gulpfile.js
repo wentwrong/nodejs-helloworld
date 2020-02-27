@@ -1,6 +1,7 @@
 const { dest, series, parallel } = require('gulp');
 const del = require('del');
 const ts = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
 
 const paths = {
     BUILD_DIR:   'lib',
@@ -17,27 +18,39 @@ const sharedTs = ts.createProject(`src/${paths.SHARED_DIR}/tsconfig.json`);
 const mockGithubTs = ts.createProject(`src/${paths.MOCK_GITHUB}/tsconfig.json`);
 
 function transpileServer () {
-    return serverTs.src()
-        .pipe(serverTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/server`));
+    return serverTs
+        .src()
+        .pipe(sourcemaps.init())
+        .pipe(serverTs()).js
+        .pipe(sourcemaps.write())
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileShared () {
-    return sharedTs.src()
-        .pipe(sharedTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/shared`));
+    return sharedTs
+        .src()
+        .pipe(sourcemaps.init())
+        .pipe(sharedTs()).js
+        .pipe(sourcemaps.write())
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileClient () {
-    return clientTs.src()
-        .pipe(clientTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/client`));
+    return clientTs
+        .src()
+        .pipe(sourcemaps.init())
+        .pipe(clientTs()).js
+        .pipe(sourcemaps.write())
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 function transpileMockGithub () {
-    return mockGithubTs.src()
-        .pipe(mockGithubTs())
-        .js.pipe(dest(`${paths.BUILD_DIR}/mock-github`));
+    return mockGithubTs
+        .src()
+        .pipe(sourcemaps.init())
+        .pipe(mockGithubTs()).js
+        .pipe(sourcemaps.write())
+        .pipe(dest(paths.BUILD_DIR));
 }
 
 async function clean () {

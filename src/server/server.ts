@@ -1,7 +1,7 @@
 import { Server as NetServer } from 'net';
 import { once } from 'events';
 import express from 'express';
-import debugFactory from './debug';
+import debugFactory from '../shared/debugFactory';
 
 const debug = debugFactory('server');
 

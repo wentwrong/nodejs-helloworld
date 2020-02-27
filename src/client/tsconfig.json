@@ -1,8 +1,10 @@
 {
     "extends": "../../tsconfig",
+    "include": ["**/*"],
+    "files": ["../shared/globalErrorHandlers.ts"],
     "compilerOptions": {
         "module": "system",
-        "checkJs": false,
-        "outFile": "bundle.js"
+        "esModuleInterop": true,
+        "outFile": "client/bundle.js"
     }
 }

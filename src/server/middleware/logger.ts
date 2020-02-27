@@ -1,5 +1,5 @@
 import express from 'express';
-import debugFactory from '../debug';
+import debugFactory from '../../shared/debugFactory';
 
 const debug = debugFactory('http');
 
