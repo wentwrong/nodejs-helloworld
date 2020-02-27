@@ -22,7 +22,7 @@ function transpileServer () {
         .src()
         .pipe(sourcemaps.init())
         .pipe(serverTs()).js
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write())
         .pipe(dest(paths.BUILD_DIR));
 }
 
@@ -31,7 +31,7 @@ function transpileShared () {
         .src()
         .pipe(sourcemaps.init())
         .pipe(sharedTs()).js
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write())
         .pipe(dest(paths.BUILD_DIR));
 }
 
@@ -40,7 +40,7 @@ function transpileClient () {
         .src()
         .pipe(sourcemaps.init())
         .pipe(clientTs()).js
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write())
         .pipe(dest(paths.BUILD_DIR));
 }
 
@@ -49,7 +49,7 @@ function transpileMockGithub () {
         .src()
         .pipe(sourcemaps.init())
         .pipe(mockGithubTs()).js
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write())
         .pipe(dest(paths.BUILD_DIR));
 }
 
