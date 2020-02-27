@@ -47,6 +47,7 @@
     "@types/got": "^9.6.9",
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.1",
+    "@types/moment": "^2.13.0",
     "debug": "^4.1.1",
     "dedent": "^0.7.0",
     "dotenv": "^8.2.0",
@@ -54,6 +55,7 @@
     "globby": "^11.0.0",
     "got": "^10.4.0",
     "gulp-sourcemaps": "^2.6.5",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0"
   }
 }

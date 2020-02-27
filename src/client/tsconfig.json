@@ -4,6 +4,7 @@
     "files": ["../shared/globalErrorHandlers.ts"],
     "compilerOptions": {
         "module": "system",
+        "moduleResolution": "node",
         "esModuleInterop": true,
         "outFile": "client/bundle.js"
     }
