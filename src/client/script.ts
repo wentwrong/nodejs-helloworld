@@ -1,6 +1,7 @@
 import { PullRequestList } from '../shared/interfaces/pullRequests';
 import { createPullsPage, createLoader } from './templates';
-import pullsController from './controllers/pullsController';
+import PullsController from './controllers/pullsController';
+import ReposController from './controllers/reposController';
 import errorRegister from '../shared/errorRegister';
 import debugFactory from '../shared/debugFactory';
 import { reloadBtnClick } from './eventhandler';
@@ -23,9 +24,10 @@ export default class App implements ClientApp {
 
     async render (): Promise<void> {
         try {
-            const pulls: PullRequestList = await pullsController.list();
+            const pulls: PullRequestList = await PullsController.list();
+            const slug: string = await ReposController.getSlug();
 
-            this.setRoot(createPullsPage(pulls));
+            this.setRoot(createPullsPage(pulls, slug));
         }
         catch (err) {
             debug.error(err);

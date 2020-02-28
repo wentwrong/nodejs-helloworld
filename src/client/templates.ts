@@ -19,7 +19,9 @@ export function createLoader (): string {
         </div>`;
 }
 
-export function createPullsPage ({ pullRequestList }: PullRequestList): string {
+export function createPullsPage (pullRequestListObject: PullRequestList, slug: string): string {
+    const { pullRequestList } = pullRequestListObject;
+
     if (pullRequestList.length) {
         const pulls = pullRequestList
             .map(pullrequest =>
@@ -47,7 +49,10 @@ export function createPullsPage ({ pullRequestList }: PullRequestList): string {
                 ${pulls}
             </ul>
             <div class="center-align">
-                Fetched ${pullRequestList.length} non-collaborator Pull Requests
+                Fetched ${pullRequestList.length} non-collaborator Pull Requests from 
+                <div class="chip">
+                    ${slug}
+                </div>
             </div>
             `;
     }
