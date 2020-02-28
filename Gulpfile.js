@@ -72,7 +72,7 @@ function unitTests () {
 
 function e2eTests () {
     return src(`${paths.E2E_TESTS}/*.js`)
-        .pipe(testcafe({ browsers: ['chrome'] }));
+        .pipe(testcafe({ browsers: ['chrome:headless'] }));
 }
 
 function lint ({ fix = false } = {}) {
