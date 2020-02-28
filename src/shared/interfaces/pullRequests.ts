@@ -9,10 +9,6 @@ export interface PullRequest {
         html_url: string;
         avatar_url: string;
     };
-    labels: [{
-        name: string;
-    }];
-
 }
 
 export interface PullRequestList {

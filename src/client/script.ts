@@ -6,6 +6,7 @@ import errorRegister from '../shared/errorRegister';
 import debugFactory from '../shared/debugFactory';
 import { reloadBtnClick } from './eventhandler';
 import { ClientApp } from './interfaces/clientApp';
+import config from '../shared/sharedConfig';
 
 const debug = debugFactory('app');
 
@@ -48,8 +49,12 @@ export default class App implements ClientApp {
     private setEventHandlers (): void {
         const reloadButton = document?.getElementById('reload-btn');
 
-        if (reloadButton)
-            reloadButton.addEventListener('click', () => reloadBtnClick(this));
+        if (reloadButton) {
+            const cb = (): void => reloadBtnClick(this);
+
+            reloadButton.addEventListener('click', cb);
+            setInterval(cb, config.POLLING_INTERVAL);
+        }
         else
             throw new Error('Button with id = reload-btn was not found');
     }

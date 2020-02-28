@@ -4,7 +4,7 @@ import dedent from 'dedent';
 
 export function createLoader (): string {
     return dedent`
-        <div class="center-align">
+        <div class="center-align" id="loader">
             <div class="preloader-wrapper big active">
                 <div class="spinner-layer spinner-blue-only">
                 <div class="circle-clipper left">
@@ -26,7 +26,7 @@ export function createPullsPage (pullRequestListObject: PullRequestList, slug: s
         const pulls = pullRequestList
             .map(pullrequest =>
                 dedent`
-                    <li class="collection-item avatar">
+                    <li class="collection-item avatar" id="pull-request">
                         <img src="${pullrequest.user.avatar_url}" class="circle">
                         <span class="title">
                             <a href="${pullrequest.html_url}">
@@ -57,7 +57,7 @@ export function createPullsPage (pullRequestListObject: PullRequestList, slug: s
             `;
     }
     return dedent`
-        <div class="card-panel red lighten-2">
+        <div class="card-panel red lighten-2" id="no-pull-requests">
             <h1>
                 0 non-collaborator Pull Requests.
             </h1>

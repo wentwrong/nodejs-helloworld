@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "target": "es2019",
+        "sourceMap": true,
         "outDir": "lib",
         "rootDir": "src",
-        "sourceMap": true,
         "esModuleInterop": true,
         "allowJs": true,
         "checkJs": false,
