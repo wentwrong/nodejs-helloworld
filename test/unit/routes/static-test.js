@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import got from 'got';
-import App from '../../';
+import App from '../../../';
 
 describe('Static', () => {
     const app = new App();
