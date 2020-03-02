@@ -13,6 +13,7 @@
     "test": "npm run lint && gulp test",
     "unit": "gulp unit",
     "e2e": "gulp e2e",
+    "e2e-debug": "cross-env DEBUG=gh-canary:* npm run e2e",
     "test-debug": "cross-env DEBUG=gh-canary:* npm test"
   },
   "repository": {
@@ -42,7 +43,7 @@
     "systemjs": "^6.2.3",
     "testcafe": "^1.8.2",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@octokit/rest": "^16.43.1",

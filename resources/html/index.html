@@ -19,24 +19,19 @@
     <!-- Icons for materialize -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- SystemJS sources for in-browser modules support -->
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/system.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/named-register.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/amd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/global.js"></script>
-
+    <!-- SystemJS sources for in-browser modules support -->  
     <script type="systemjs-importmap">
       {
         "imports": {
           "debug": "https://unpkg.com/debug@4.1.1/dist/debug.js",
           "moment": "https://unpkg.com/moment@2.24.0/moment.js",
-          "dedent": "https://www.unpkg.com/dedent@0.7.0/dist/dedent.js"
+          "dedent": "https://unpkg.com/dedent@0.7.0/dist/dedent.js"
         }
       }
     </script>
     
-    <!-- Compiled bundle with client-side logic -->
-    <script src="bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/system.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/named-register.js"></script>
 </head>
 
 <body class="brown lighten-5">
@@ -55,15 +50,14 @@
         <div id="root">
         </div>
       </div>
-    </div>
+  </div>
+  
   <script>
     (async () => {
-      const { default: App } = await System.import('client/script');
-      const app = new App();
-
-      await app.init();
-      await app.render();
+      await System.import('./bundle.js');
+      await System.import('client/index');
     })()
   </script>
+
 </body>
 </html>
