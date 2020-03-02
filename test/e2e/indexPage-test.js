@@ -1,9 +1,9 @@
-import { Selector } from 'testcafe';
 import App from '../../';
 import config from '../../lib/server/config';
 import MockGithubApp from '../../lib/mock-github/mockGithubApp';
 import PullRequestsModel from '../../lib/server/models/pullRequestsModel';
 import sharedConfig from '../../lib/shared/sharedConfig';
+import page from './pages/indexPage';
 
 const pullRequest = require('../fixtures/pullRequest');
 
@@ -24,11 +24,16 @@ fixture `Main page`
     .after(async () => {
         await app.close();
         await mockGithub.close();
+    })
+    .beforeEach(async () => {
+        PullRequestsModel
+            .getModel()
+            .clear();
     });
 
 test(`Pull Requests dynamically updated with time (${sharedConfig.POLLING_INTERVAL} ms interval)`, async t => {
     await t
-        .expect(Selector('#no-pull-requests').exists)
+        .expect(page.noPullRequestsDiv.exists)
         .ok();
 
     PullRequestsModel
@@ -36,6 +41,22 @@ test(`Pull Requests dynamically updated with time (${sharedConfig.POLLING_INTERV
         .addPullRequest(pullRequest);
 
     await t
-        .expect(Selector('#pull-request').exists)
+        .expect(page.pullRequestDiv.exists)
         .ok('', { timeout: sharedConfig.POLLING_INTERVAL + 3000 });
+});
+
+test(`Pull Requests updated via click on reload button`, async t => {
+    await t
+        .expect(page.noPullRequestsDiv.exists)
+        .ok();
+
+    PullRequestsModel
+        .getModel()
+        .addPullRequest(pullRequest);
+
+    await page.clickReloadBtn();
+
+    await t
+        .expect(page.pullRequestDiv.exists)
+        .ok();
 });

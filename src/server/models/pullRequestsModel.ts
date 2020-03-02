@@ -21,4 +21,8 @@ export default class PullRequestsModel {
     addPullRequest (pullRequest: PullRequest): void {
         this.pullRequests.push(pullRequest);
     }
+
+    clear (): void {
+        this.pullRequests = [];
+    }
 }
