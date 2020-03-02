@@ -5,6 +5,7 @@
     <title>Dashboard</title>
     <meta name="description" content="Dashboard for github pull-requests notifier">
     <meta name="author" content="wentwrong">
+    <script src="errorhandlers.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/system.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/named-register.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/amd.js"></script>
@@ -15,7 +16,7 @@
           "debug": "https://unpkg.com/debug@4.1.1/dist/debug.js"
         }
       }
-  </script>
+    </script>
     <script src="bundle.js"></script>
 </head>
 
@@ -25,12 +26,7 @@
   </div>
   <script>
     (async () => {
-      const { default: globalClientErrorHandlers } = await System.import('shared/globalErrorHandlers');
-
-      await globalClientErrorHandlers();
-
       const { default: App } = await System.import('client/script');
-
       const app = new App();
 
       await app.render();

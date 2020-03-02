@@ -1,10 +1,9 @@
 {
     "extends": "../../tsconfig",
-    "include": ["**/*"],
-    "exclude": ["errorhandlers.ts"],
+    "files": ["errorhandlers.ts"],
     "compilerOptions": {
         "module": "system",
         "esModuleInterop": true,
-        "outFile": "client/bundle.js"
+        "outFile": "client/errorhandlers.js"
     }
 }
