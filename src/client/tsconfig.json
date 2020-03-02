@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig",
     "include": ["**/*"],
-    "files": ["../shared/globalErrorHandlers.ts"],
+    "exclude": ["errorhandlers.ts"],
     "compilerOptions": {
         "module": "system",
         "moduleResolution": "node",

@@ -1,0 +1,9 @@
+{
+    "extends": "../../tsconfig",
+    "files": ["errorhandlers.ts"],
+    "compilerOptions": {
+        "module": "system",
+        "esModuleInterop": true,
+        "outFile": "client/errorhandlers.js"
+    }
+}

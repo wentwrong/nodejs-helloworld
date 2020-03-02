@@ -15,6 +15,7 @@ const paths = {
 };
 
 const serverTs = ts.createProject(`src/${paths.SERVER_DIR}/tsconfig.json`);
+const clientErrorHandlingTs = ts.createProject(`src/${paths.CLIENT_DIR}/tsconfig.errorhandlers.json`);
 const clientTs = ts.createProject(`src/${paths.CLIENT_DIR}/tsconfig.json`);
 const sharedTs = ts.createProject(`src/${paths.SHARED_DIR}/tsconfig.json`);
 const mockGithubTs = ts.createProject(`src/${paths.MOCK_GITHUB}/tsconfig.json`);
@@ -42,6 +43,15 @@ function transpileClient () {
         .src()
         .pipe(sourcemaps.init())
         .pipe(clientTs()).js
+        .pipe(sourcemaps.write())
+        .pipe(dest(paths.BUILD_DIR));
+}
+
+function transpileClientErrorHandlers () {
+    return clientErrorHandlingTs
+        .src()
+        .pipe(sourcemaps.init())
+        .pipe(clientErrorHandlingTs()).js
         .pipe(sourcemaps.write())
         .pipe(dest(paths.BUILD_DIR));
 }
@@ -87,7 +97,7 @@ function lint ({ fix = false } = {}) {
 }
 
 const buildServer = transpileServer;
-const buildClient = transpileClient;
+const buildClient = parallel(transpileClientErrorHandlers, transpileClient);
 const buildShared = transpileShared;
 const buildMockGithub = transpileMockGithub;
 

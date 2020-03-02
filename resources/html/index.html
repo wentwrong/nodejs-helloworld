@@ -7,6 +7,9 @@
     <meta name="author" content="wentwrong">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+    <!-- Global window error handlers -->
+    <script src="errorhandlers.js"></script>
+
     <!-- Compiled and minified materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -21,6 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/named-register.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/amd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.2.3/dist/extras/global.js"></script>
+
     <script type="systemjs-importmap">
       {
         "imports": {
@@ -54,9 +58,6 @@
     </div>
   <script>
     (async () => {
-      const { default: globalClientErrorHandlers } = await System.import('shared/globalErrorHandlers');
-      await globalClientErrorHandlers();
-
       const { default: App } = await System.import('client/script');
       const app = new App();
 

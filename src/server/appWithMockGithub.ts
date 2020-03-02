@@ -1,6 +1,6 @@
 import App from './app';
 import MockGithubApp from '../mock-github/mockGithubApp';
-import globalErrorHandlers from '../shared/globalErrorHandlers';
+import globalErrorHandlers from '../server/globalErrorHandlers';
 import config from './config';
 
 globalErrorHandlers();
