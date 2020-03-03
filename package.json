@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/wentwrong/gh-canary/#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "chai": "^4.2.0",
     "cross-env": "^7.0.0",
     "del": "^5.1.0",
@@ -37,17 +37,17 @@
     "gulp": "^4.0.2",
     "gulp-testcafe": "^1.0.1",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "mocha": "^7.0.1",
+    "mocha": "^7.1.0",
     "proxyquire": "^2.1.3",
     "sinon": "^8.1.1",
-    "systemjs": "^6.2.3",
+    "systemjs": "^6.2.5",
     "testcafe": "^1.8.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "@octokit/rest": "^16.43.1",
-    "@types/chai": "^4.2.9",
+    "@types/chai": "^4.2.10",
     "@types/debug": "^4.1.5",
     "@types/dedent": "^0.7.0",
     "@types/express": "^4.17.2",
@@ -55,14 +55,16 @@
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.1",
     "@types/moment": "^2.13.0",
+    "@types/mustache": "^4.0.1",
     "debug": "^4.1.1",
     "dedent": "^0.7.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "globby": "^11.0.0",
-    "got": "^10.4.0",
+    "got": "^10.6.0",
     "gulp-sourcemaps": "^2.6.5",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "mustache": "^4.0.0"
   }
 }
