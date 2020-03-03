@@ -2,7 +2,7 @@ import debugFactory from './debugFactory';
 
 const debug = debugFactory('error-register');
 
-export default async (data: Error): Promise<void> => {
+export default async (data: string): Promise<void> => {
     try {
         await fetch('api/v1/errors/register', {
             method:  'POST',
