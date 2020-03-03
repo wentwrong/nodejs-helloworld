@@ -1,0 +1,18 @@
+{{! This is `Pull Request List` item which appear when user decided to fetch pull requests from given `slug` }}
+<ul class="collection" {{^ pulls }}hidden{{/ pulls }}>
+    {{# pulls }}
+        {{> pull }}
+    {{/pulls}}
+</ul>
+
+<div class="center-align" {{^ pulls }}hidden{{/ pulls }}>
+    Fetched {{ pulls.length }} non-collaborator Pull Requests from <div class="chip">{{ slug }}</div>
+</div>
+
+{{! This message show when there are not Pull Requests }}
+{{^ pulls }}
+    <div class="card-panel red lighten-2" id="no-pull-requests">
+        {{! `slug` is `owner/repo` }}
+        <h2>0 non-collaborator Pull Requests on {{ slug }}</h2>
+    </div>
+{{/ pulls }}
