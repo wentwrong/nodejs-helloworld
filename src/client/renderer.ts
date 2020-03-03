@@ -13,7 +13,7 @@ export default class Renderer {
         catch (err) {
             debug.error(err);
 
-            errorRegister(err.stack());
+            errorRegister(err.stack);
 
             const errorView = new ErrorView();
 
