@@ -5,13 +5,14 @@
       "mocha": true
     },
     "parser": "@typescript-eslint/parser",  
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "testcafe"],
     "parserOptions": {
       "sourceType": "module",
       "project": "tsconfig.json"
     },
     "extends": [
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:testcafe/recommended"
     ],
     "rules": {
       "arrow-parens": [2, "as-needed"],

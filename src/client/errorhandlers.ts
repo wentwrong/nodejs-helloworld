@@ -3,6 +3,8 @@ window
         e.preventDefault();
         const err = (e.reason.stack || e.reason).toString();
 
+        console.log(err);
+
         await errorRegister(err);
     });
 
@@ -16,6 +18,8 @@ window
             'Column: ' + e.colno,
             'Error object: ' + JSON.stringify(e.error)
         ].join('\n');
+
+        console.log(msg);
 
         await errorRegister(msg);
     });

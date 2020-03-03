@@ -4,6 +4,7 @@
     "exclude": ["errorhandlers.ts"],
     "compilerOptions": {
         "module": "system",
+        "moduleResolution": "node",
         "esModuleInterop": true,
         "outFile": "client/bundle.js"
     }

@@ -1,7 +1,8 @@
-const { dest, series, parallel } = require('gulp');
+const { dest, series, parallel, src } = require('gulp');
 const del = require('del');
 const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
+const testcafe = require('gulp-testcafe');
 
 const paths = {
     BUILD_DIR:   'lib',
@@ -9,7 +10,8 @@ const paths = {
     SERVER_DIR:  'server',
     SHARED_DIR:  'shared',
     TESTS_DIR:   'test',
-    MOCK_GITHUB: 'mock-github'
+    MOCK_GITHUB: 'mock-github',
+    E2E_TESTS:   'test/e2e'
 };
 
 const serverTs = ts.createProject(`src/${paths.SERVER_DIR}/tsconfig.json`);
@@ -67,15 +69,20 @@ async function clean () {
     await del([paths.BUILD_DIR]);
 }
 
-function mocha () {
+function unitTests () {
     return require('child_process')
         .spawn(
-            'npx mocha -r ts-node/register test/**/*-test.*',
+            'npx mocha -r ts-node/register test/unit/**/*-test.*',
             {
                 shell: true,
                 stdio: 'inherit'
             }
         );
+}
+
+function e2eTests () {
+    return src(`${paths.E2E_TESTS}/*.js`)
+        .pipe(testcafe({ browsers: ['chrome:headless'] }));
 }
 
 function lint ({ fix = false } = {}) {
@@ -96,6 +103,8 @@ const buildMockGithub = transpileMockGithub;
 
 exports['clean'] = clean;
 exports['build'] = series(clean, parallel(buildServer, buildClient, buildShared, buildMockGithub));
-exports['test'] = mocha;
+exports['test'] = series(unitTests, e2eTests);
 exports['lint'] = lint;
 exports['lint-fix'] = () => lint({ fix: true });
+exports['unit'] = unitTests;
+exports['e2e'] = e2eTests;
