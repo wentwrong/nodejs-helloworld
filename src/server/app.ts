@@ -24,6 +24,7 @@ export default class App extends ConfiguratedExpress {
      * @memberof App
      */
     private setMiddlewares (): void {
+        this.express.use(express.static(config.STYLESHEETS_DIR));
         this.express.use(express.static(config.STATIC_DIR));
         this.express.use(express.static(config.CLIENT_SCRIPTS_DIR));
     }

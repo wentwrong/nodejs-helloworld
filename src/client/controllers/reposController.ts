@@ -1,12 +1,13 @@
 import debugFactory from '../../shared/debugFactory';
 import errorRegister from '../../shared/errorRegister';
+import { Slug } from '../../shared/interfaces/slug';
 
 const debug = debugFactory('repos-controller');
 
 export default class ReposController {
-    static async getSlug (): Promise<string> {
+    static async getSlugs (): Promise<Slug[]> {
         try {
-            const endpointUrl = 'api/v1/repos/slug';
+            const endpointUrl = 'api/v1/repos/slugs';
             const response = await fetch(endpointUrl);
 
             debug.log(`Endpoint ${endpointUrl} answer with response`);
@@ -15,9 +16,9 @@ export default class ReposController {
             if (response.status !== 200)
                 throw new Error(`Endpoint ${endpointUrl} answer with HTTP status code ${response.status}`);
 
-            const { slug } = await response.json();
+            const { slugs } = await response.json();
 
-            return slug;
+            return slugs;
         }
         catch (err) {
             debug.error('Error occured when fetching slug data');
@@ -25,7 +26,7 @@ export default class ReposController {
 
             await errorRegister(err.stack);
 
-            return '';
+            return [];
         }
     }
 }

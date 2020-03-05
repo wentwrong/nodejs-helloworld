@@ -3,7 +3,7 @@ import got from 'got';
 import config from '../../../lib/server/config';
 import App from '../../../';
 import MockGithubApp from '../../../lib/mock-github/mockGithubApp';
-import PullRequestsModel from '../../../lib/server/models/pullRequestsModel';
+import pullRequestsModel from '../../../lib/mock-github/models/pullRequestsModel';
 
 const pullRequest = require('../../fixtures/pullRequest');
 
@@ -14,11 +14,14 @@ describe(`REST API`, () => {
     before(async () => {
         const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port}/${config.MOCK_GITHUB_PREFIX}`;
 
-        app.set(config.GITHUB_API_VAR_NAME, mockGithubUrl);
+        config.DEFAULT_GITHUB_API_URL = mockGithubUrl;
+        config.SLUGS = ['forTesting/purpose'];
 
         await app.run();
         await mockGithub.run();
     });
+
+    beforeEach(() => pullRequestsModel.clear());
 
     after(async () => {
         await app.close();
@@ -28,9 +31,7 @@ describe(`REST API`, () => {
     it(`GET /api/${config.API_VERSION}/pulls/list should return correct pull requests`, async () => {
         const url = `http://${app.config.host}:${app.config.port}/api/${config.API_VERSION}/pulls/list`;
 
-        PullRequestsModel
-            .getModel()
-            .addPullRequest(pullRequest);
+        pullRequestsModel.addPullRequest(pullRequest);
 
         const response = await got(url, { responseType: 'json' });
 

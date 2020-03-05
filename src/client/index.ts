@@ -1,6 +1,3 @@
-import App from './app';
+import GHCApp from './app';
 
-const app = new App();
-
-await app.init();
-await app.render();
+window.customElements.define('ghc-app', GHCApp);

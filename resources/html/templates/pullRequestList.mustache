@@ -5,10 +5,6 @@
     {{/pulls}}
 </ul>
 
-<div class="center-align" {{^ pulls }}hidden{{/ pulls }}>
-    Fetched {{ pulls.length }} non-collaborator Pull Requests from <div class="chip">{{ slug }}</div>
-</div>
-
 {{! This message show when there are not Pull Requests }}
 {{^ pulls }}
     <div class="card-panel red lighten-2" id="no-pull-requests">

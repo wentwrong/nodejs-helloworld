@@ -7,8 +7,12 @@ import { PullRequest } from '../../shared/interfaces/pullRequests';
 const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
+    // TODO:
+    // Dependency Injection
+    private static octokit?: Octokit;
+
     /**
-     * Make a request to github API for all pull requests fetching and return it to user
+     * Gathering non-collaborator pull requests for all config-specified `slugs`
      *
      * @static
      * @param {express.Request} req
@@ -17,24 +21,19 @@ export default class PullsController {
      * @memberof PullsController
      */
     static async list (req: express.Request, res: express.Response): Promise<void> {
-        const octokit = new Octokit({
-            baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
-        });
-
-        const options = octokit.pulls.list.endpoint.merge({
-            owner: config.OWNER,
-            repo:  config.REPO
-        });
-
         try {
-            const pullRequests = [];
-
-            for await (const page of octokit.paginate.iterator(options)) {
-                pullRequests.push(page['data']
-                    .filter((pr: PullRequest) => pr['author_association'] === 'NONE'));
+            if (!PullsController.octokit) {
+                PullsController.octokit = new Octokit({
+                    baseUrl: config.DEFAULT_GITHUB_API_URL
+                });
             }
 
-            res.send({ pullRequestList: pullRequests.flat() });
+            const pulls = await Promise.all(
+                config.SLUGS
+                    .map(async slug => await PullsController.fetchPullRequests(slug))
+            );
+
+            res.send({ pullRequestList: pulls.flat() });
         }
         catch (err) {
             debug.error(`An error has happened when ${req.ip} requests ${req.path}`);
@@ -44,6 +43,32 @@ export default class PullsController {
                 .status(500)
                 .json({ error: 'An error has occured while fetching pull-requests from server.' });
         }
+    }
+
+    /**
+     * Fetch non-collaborator pull requests from given `slug`
+     *
+     * @private
+     * @static
+     * @param {string} slug
+     * @returns {Promise<void>}
+     * @memberof PullsController
+     */
+    private static async fetchPullRequests (slug: string): Promise<PullRequest[]> {
+        if (!PullsController.octokit)
+            throw new Error('Octokit was not init');
+
+        const [ owner, repo ] = slug.split('/');
+        const options = PullsController.octokit.pulls.list.endpoint.merge({ owner, repo });
+
+        const onlyNonCollaboratorsFilter = function (response: Octokit.AnyResponse): Octokit.AnyResponse {
+            return response.data
+                .filter((pr: PullRequest) => pr.author_association === 'NONE');
+        };
+
+        const pulls: PullRequest[] = await PullsController.octokit.paginate(options, onlyNonCollaboratorsFilter);
+
+        return pulls;
     }
 
     static async addComment (req: express.Request, res: express.Response): Promise<void> {

@@ -11,7 +11,7 @@ if (require.main === module) {
 
     const mockUrl = `http://${mock.config.host}:${mock.config.port}/${config.MOCK_GITHUB_PREFIX}`;
 
-    app.set(config.GITHUB_API_VAR_NAME, mockUrl);
+    config.DEFAULT_GITHUB_API_URL = mockUrl;
 
     app.run();
     mock.run();

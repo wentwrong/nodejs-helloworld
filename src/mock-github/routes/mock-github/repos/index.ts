@@ -1,9 +1,9 @@
 import express from 'express';
-import MockGithubController from '../../../controllers/mockGithubController';
+import MockPullsController from '../../../controllers/mockPullsController';
 
-export default class MockGithubRouter {
+export default class MockPullsRouter {
     static init (): express.Router {
         return express.Router()
-            .get('/:owner/:repo/pulls', MockGithubController.list);
+            .get('/:owner/:repo/pulls', MockPullsController.list);
     }
 }

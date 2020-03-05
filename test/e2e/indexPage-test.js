@@ -1,7 +1,7 @@
 import App from '../../';
 import config from '../../lib/server/config';
 import MockGithubApp from '../../lib/mock-github/mockGithubApp';
-import PullRequestsModel from '../../lib/server/models/pullRequestsModel';
+import pullRequestsModel from '../../lib/mock-github/models/pullRequestsModel';
 import sharedConfig from '../../lib/shared/sharedConfig';
 import page from './pages/indexPage';
 
@@ -16,7 +16,7 @@ const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port
 fixture `Main page`
     .page(appUrl)
     .before(async () => {
-        app.set(config.GITHUB_API_VAR_NAME, mockGithubUrl);
+        config.DEFAULT_GITHUB_API_URL = mockGithubUrl;
 
         await app.run();
         await mockGithub.run();
@@ -26,9 +26,7 @@ fixture `Main page`
         await mockGithub.close();
     })
     .beforeEach(async () => {
-        PullRequestsModel
-            .getModel()
-            .clear();
+        pullRequestsModel.clear();
     });
 
 test(`Pull Requests dynamically updated with time (${sharedConfig.POLLING_INTERVAL} ms interval)`, async t => {
@@ -36,9 +34,7 @@ test(`Pull Requests dynamically updated with time (${sharedConfig.POLLING_INTERV
         .expect(page.noPullRequestsDiv.exists)
         .ok();
 
-    PullRequestsModel
-        .getModel()
-        .addPullRequest(pullRequest);
+    pullRequestsModel.addPullRequest(pullRequest);
 
     await t
         .expect(page.pullRequestDiv.exists)
@@ -50,9 +46,7 @@ test(`Pull Requests updated via click on reload button`, async t => {
         .expect(page.noPullRequestsDiv.exists)
         .ok();
 
-    PullRequestsModel
-        .getModel()
-        .addPullRequest(pullRequest);
+    pullRequestsModel.addPullRequest(pullRequest);
 
     await page.clickReloadBtn();
 

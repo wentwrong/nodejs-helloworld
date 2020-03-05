@@ -1,11 +1,10 @@
 import express from 'express';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
-import PullRequestsModel from '../../server/models/pullRequestsModel';
+import pullRequestsModel from '../models/pullRequestsModel';
 
-export default class MockGithubController {
+export default class MockPullsController {
     static async list (req: express.Request, res: express.Response): Promise<void> {
-        const pulls: PullRequest[] = PullRequestsModel
-            .getModel()
+        const pulls: PullRequest[] = pullRequestsModel
             .getPullRequests();
 
         res.json(pulls);

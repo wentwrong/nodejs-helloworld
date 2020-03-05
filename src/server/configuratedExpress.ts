@@ -65,15 +65,4 @@ export default class ConfiguratedExpress {
         else
             throw new Error('Stop when application not running');
     }
-
-    /**
-     * Straightforward wrapper for express settings setter
-     *
-     * @param {string} key
-     * @param {string} value
-     * @memberof ConfiguratedExpress
-     */
-    set (key: string, value: string): void {
-        this.express.set(key, value);
-    }
 }
