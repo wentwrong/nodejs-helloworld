@@ -3,6 +3,7 @@ import globby from 'globby';
 import express from 'express';
 import debugFactory from '../../../shared/debugFactory';
 import { Route, createExpressRouter } from './router';
+import { Config } from '../../config';
 
 const debug = debugFactory('router');
 
@@ -37,15 +38,15 @@ function filenameToRoute (filename: string, routesDir: string): Route {
  * @param {string} routesDir
  * @returns {Promise<express.Router>}
  */
-export default async function createRoutes (routesDir: string): Promise<express.Router> {
+export default async function createRoutes (config: Config): Promise<express.Router> {
     const mainRouter = express.Router();
 
     try {
-        const files = await globby('**/*.js', { cwd: routesDir });
+        const files = await globby('**/*.js', { cwd: config.routesDir });
 
         files
-            .map(filename => filenameToRoute(filename, routesDir))
-            .map(({ routePrefix, Router }) => mainRouter.use(`/${routePrefix}`, createExpressRouter(Router)));
+            .map(filename => filenameToRoute(filename, config.routesDir))
+            .map(({ routePrefix, Router }) => mainRouter.use(`/${routePrefix}`, createExpressRouter(Router, config)));
 
         return mainRouter;
     }

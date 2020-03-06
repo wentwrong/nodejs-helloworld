@@ -1,5 +1,5 @@
 import App from '../../';
-import config from '../../lib/server/config';
+import { DEFAULT_CONFIG } from '../../lib/server/config';
 import MockGithubApp from '../../lib/mock-github/mockGithubApp';
 import pullRequestsModel from '../../lib/mock-github/models/pullRequestsModel';
 import sharedConfig from '../../lib/shared/sharedConfig';
@@ -7,17 +7,20 @@ import page from './pages/indexPage';
 
 const pullRequest = require('../fixtures/pullRequest');
 
-const app = new App({ port: 1337 });
-const mockGithub = new MockGithubApp({ port: 1338, routesDir: config.MOCK_ROUTES_DIR });
+const mockGithub = new MockGithubApp({ port: 1338, routesDir: DEFAULT_CONFIG.mockRoutesDir });
+const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port}/${DEFAULT_CONFIG.mockPrefix}`;
+
+const app = new App({
+    port:         1337,
+    githubAPIURL: mockGithubUrl,
+    slugs:        ['wentwrong/gh-canary']
+});
 
 const appUrl = `http://${app.config.host}:${app.config.port}`;
-const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port}/${config.MOCK_GITHUB_PREFIX}`;
 
 fixture `Main page`
     .page(appUrl)
     .before(async () => {
-        config.DEFAULT_GITHUB_API_URL = mockGithubUrl;
-
         await app.run();
         await mockGithub.run();
     })

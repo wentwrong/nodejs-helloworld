@@ -1,8 +1,6 @@
 import express from 'express';
-import config from './config';
 import ConfiguratedExpress from './configuratedExpress';
-import { AppConfigurationAsParam } from './utils/app/appConfiguration';
-
+import { Config } from './config';
 
 /**
  * Main Application class.
@@ -11,8 +9,10 @@ import { AppConfigurationAsParam } from './utils/app/appConfiguration';
  * @class App
  * @extends {ConfiguratedExpress}
  */
+
+
 export default class App extends ConfiguratedExpress {
-    constructor (conf?: AppConfigurationAsParam) {
+    constructor (conf?: Partial<Config>) {
         super(conf);
         this.setMiddlewares();
     }
@@ -24,8 +24,7 @@ export default class App extends ConfiguratedExpress {
      * @memberof App
      */
     private setMiddlewares (): void {
-        this.express.use(express.static(config.STYLESHEETS_DIR));
-        this.express.use(express.static(config.STATIC_DIR));
-        this.express.use(express.static(config.CLIENT_SCRIPTS_DIR));
+        this.express.use(express.static(this.config.staticDir));
+        this.express.use(express.static(this.config.clientScriptsDir));
     }
 }

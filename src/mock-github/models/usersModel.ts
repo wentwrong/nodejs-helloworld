@@ -1,9 +1,9 @@
 import { User } from '../../shared/interfaces/user';
-import config from '../../server/config';
+import { DEFAULT_CONFIG } from '../../server/config';
 
 class UsersModel {
     getInfoByUsername (): User {
-        return { 'avatar_url': config.DEFAULT_AVATAR_URL };
+        return { 'avatar_url': DEFAULT_CONFIG.defaultGithubAvatarURL };
     }
 }
 

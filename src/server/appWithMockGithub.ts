@@ -1,17 +1,15 @@
 import App from './app';
 import MockGithubApp from '../mock-github/mockGithubApp';
 import globalErrorHandlers from '../server/globalErrorHandlers';
-import config from './config';
+import { DEFAULT_CONFIG } from './config';
 
 globalErrorHandlers();
 
 if (require.main === module) {
-    const app = new App({ port: 1337 });
-    const mock = new MockGithubApp({ port: 1338, routesDir: config.MOCK_ROUTES_DIR });
+    const mock = new MockGithubApp({ port: 1338, routesDir: DEFAULT_CONFIG.mockRoutesDir });
+    const mockUrl = `http://${mock.config.host}:${mock.config.port}/${DEFAULT_CONFIG.mockPrefix}`;
 
-    const mockUrl = `http://${mock.config.host}:${mock.config.port}/${config.MOCK_GITHUB_PREFIX}`;
-
-    config.DEFAULT_GITHUB_API_URL = mockUrl;
+    const app = new App({ port: 1337, githubAPIURL: mockUrl });
 
     app.run();
     mock.run();

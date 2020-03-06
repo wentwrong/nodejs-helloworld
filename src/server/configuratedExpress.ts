@@ -1,9 +1,8 @@
 import express from 'express';
-import config from './config';
 import logger from './middleware/logger';
 import Server from './server';
 import createRoutes from './utils/routes/createRoutes';
-import { AppConfigurationAsParam, AppConfiguration } from './utils/app/appConfiguration';
+import createConfig, { Config } from './config';
 
 /**
  * Wrapper for express application. Deal with initial preconfiguration
@@ -12,14 +11,14 @@ import { AppConfigurationAsParam, AppConfiguration } from './utils/app/appConfig
  * @class ConfiguratedExpress
  */
 export default class ConfiguratedExpress {
+    readonly config: Config;
+
     public express: express.Application;
-    public config: AppConfiguration;
     private server?: Server;
 
-    constructor ({ port = config.PORT, host = config.HOST, routesDir = config.ROUTES_DIR }:
-        AppConfigurationAsParam = {}) {
+    constructor (config?: Partial<Config>) {
+        this.config = createConfig(config);
         this.express = express();
-        this.config = { port, host, routesDir };
     }
 
     /**
@@ -36,9 +35,9 @@ export default class ConfiguratedExpress {
 
         this.express.use(express.urlencoded({ extended: true }));
 
-        this.express.set(config.JSON_SETTING_NAME, config.JSON_SPACES);
+        this.express.set(this.config.jsonExpressSettingName, this.config.jsonExpressSettingSpaces);
 
-        this.express.use(await createRoutes(this.config.routesDir));
+        this.express.use(await createRoutes(this.config));
     }
 
     /**

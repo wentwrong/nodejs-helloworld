@@ -1,7 +1,14 @@
 import express from 'express';
+import { Config } from '../../config';
+import createOctokit from '../createOctokit';
+import { Octokit } from '@octokit/rest';
+
+export interface RouterConstructor {
+    new (config: Config, octokit?: Octokit): RouterWrapper;
+}
 
 export interface RouterWrapper {
-    init(): express.Router;
+    init (): express.Router;
 }
 
 /**
@@ -12,16 +19,11 @@ export interface RouterWrapper {
  */
 export interface Route {
     routePrefix: string;
-    Router: RouterWrapper;
+    Router: RouterConstructor;
 }
 
-/**
- * Creates express router from custom router
- *
- * @export
- * @param {RouterWrapper} Router
- * @returns {express.Router}
- */
-export function createExpressRouter (Router: RouterWrapper): express.Router {
-    return Router.init();
+export function createExpressRouter (Router: RouterConstructor, config: Config): express.Router {
+    const router = new Router(config, createOctokit(config));
+
+    return router.init();
 }

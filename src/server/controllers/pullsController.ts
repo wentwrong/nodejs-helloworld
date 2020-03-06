@@ -1,36 +1,28 @@
 import express from 'express';
 import { Octokit } from '@octokit/rest';
-import config from '../config';
 import debugFactory from '../../shared/debugFactory';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
+import { Config } from '../config';
 
 const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
     // TODO:
     // Dependency Injection
-    private static octokit?: Octokit;
+    constructor (private config: Config, private octokit: Octokit) { }
 
     /**
      * Gathering non-collaborator pull requests for all config-specified `slugs`
      *
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @returns {Promise<void>}
      * @memberof PullsController
      */
-    static async list (req: express.Request, res: express.Response): Promise<void> {
+    async list (req: express.Request, res: express.Response): Promise<void> {
         try {
-            if (!PullsController.octokit) {
-                PullsController.octokit = new Octokit({
-                    baseUrl: config.DEFAULT_GITHUB_API_URL
-                });
-            }
-
             const pulls = await Promise.all(
-                config.SLUGS
-                    .map(async slug => await PullsController.fetchPullRequests(slug))
+                this.config.slugs.map(async slug => await this.fetchPullRequests(slug))
             );
 
             res.send({ pullRequestList: pulls.flat() });
@@ -49,29 +41,25 @@ export default class PullsController {
      * Fetch non-collaborator pull requests from given `slug`
      *
      * @private
-     * @static
      * @param {string} slug
      * @returns {Promise<void>}
      * @memberof PullsController
      */
-    private static async fetchPullRequests (slug: string): Promise<PullRequest[]> {
-        if (!PullsController.octokit)
-            throw new Error('Octokit was not init');
-
+    async fetchPullRequests (slug: string): Promise<PullRequest[]> {
         const [ owner, repo ] = slug.split('/');
-        const options = PullsController.octokit.pulls.list.endpoint.merge({ owner, repo });
+        const options = this.octokit.pulls.list.endpoint.merge({ owner, repo });
 
         const onlyNonCollaboratorsFilter = function (response: Octokit.AnyResponse): Octokit.AnyResponse {
             return response.data
                 .filter((pr: PullRequest) => pr.author_association === 'NONE');
         };
 
-        const pulls: PullRequest[] = await PullsController.octokit.paginate(options, onlyNonCollaboratorsFilter);
+        const pulls: PullRequest[] = await this.octokit.paginate(options, onlyNonCollaboratorsFilter);
 
         return pulls;
     }
 
-    static async addComment (req: express.Request, res: express.Response): Promise<void> {
+    async addComment (req: express.Request, res: express.Response): Promise<void> {
         res.json({ message: 'NOT IMPLEMENTED YET' });
     }
 }
