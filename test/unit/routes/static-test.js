@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import axios from 'axios';
+import got from 'got';
 import App from '../../../';
 
 describe('Static', () => {
@@ -14,9 +14,9 @@ describe('Static', () => {
     });
 
     it(`index should return 200 response`, async () => {
-        const response = await axios.get(`http://${app.config.host}:${app.config.port}/`);
+        const response = await got(`http://${app.config.host}:${app.config.port}/`);
 
-        expect(response.data).contain('Dashboard');
-        // expect(response.statusCode).equal(200);
+        expect(response.body).contain('Dashboard');
+        expect(response.statusCode).equal(200);
     });
 });
