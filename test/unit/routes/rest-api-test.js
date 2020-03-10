@@ -32,7 +32,7 @@ describe(`REST API`, () => {
 
         pullRequestsModel.generateMockPullRequests(1);
 
-        const pulls = await pullRequestsModel.getPullRequests();
+        const pulls = pullRequestsModel.getPullRequests();
         const response = await axios.get(url, { responseType: 'json' });
 
         expect(response.status).equal(200);
