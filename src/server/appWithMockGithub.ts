@@ -4,8 +4,6 @@ import globalErrorHandlers from '../server/globalErrorHandlers';
 import { DEFAULT_CONFIG } from './config';
 import pullRequestsModel from '../mock-github/models/pullRequestsModel';
 
-const pullRequest = require('../../test/fixtures/pullRequest');
-
 globalErrorHandlers();
 
 if (require.main === module) {
@@ -18,10 +16,7 @@ if (require.main === module) {
         slugs:        ['wentwrong/gh-canary']
     });
 
-    pullRequestsModel.addPullRequest(pullRequest);
-    pullRequestsModel.addPullRequest(pullRequest);
-    pullRequestsModel.addPullRequest(pullRequest);
-    pullRequestsModel.addPullRequest(pullRequest);
+    pullRequestsModel.generateMockPullRequests(DEFAULT_CONFIG.numOfMockPullRequests);
 
     app.run();
     mock.run();

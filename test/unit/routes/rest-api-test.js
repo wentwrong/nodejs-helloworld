@@ -5,8 +5,6 @@ import MockGithubApp from '../../../lib/mock-github/mockGithubApp';
 import pullRequestsModel from '../../../lib/mock-github/models/pullRequestsModel';
 import { DEFAULT_CONFIG } from '../../../src/server/config';
 
-const pullRequest = require('../../fixtures/pullRequest');
-
 describe(`REST API`, () => {
     const mockGithub = new MockGithubApp({ port: 1338, routesDir: DEFAULT_CONFIG.mockRoutesDir });
     const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port}/${DEFAULT_CONFIG.mockPrefix}`;
@@ -17,12 +15,12 @@ describe(`REST API`, () => {
         slugs:        ['wentwrong/gh-canary']
     });
 
+    beforeEach(pullRequestsModel.clear);
+
     before(async () => {
         await app.run();
         await mockGithub.run();
     });
-
-    beforeEach(() => pullRequestsModel.clear());
 
     after(async () => {
         await app.close();
@@ -32,11 +30,12 @@ describe(`REST API`, () => {
     it(`GET /api/${DEFAULT_CONFIG.apiVersion}/pulls/list should return correct pull requests`, async () => {
         const url = `http://${app.config.host}:${app.config.port}/api/${DEFAULT_CONFIG.apiVersion}/pulls/list`;
 
-        pullRequestsModel.addPullRequest(pullRequest);
+        pullRequestsModel.generateMockPullRequests(1);
 
+        const pulls = await pullRequestsModel.getPullRequests();
         const response = await axios.get(url, { responseType: 'json' });
 
         expect(response.status).equal(200);
-        expect(response.data.pullRequestList).to.eql([ pullRequest ]);
+        expect(response.data.pullRequestList).to.eql(pulls);
     });
 });

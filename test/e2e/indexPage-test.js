@@ -5,8 +5,6 @@ import pullRequestsModel from '../../lib/mock-github/models/pullRequestsModel';
 import sharedConfig from '../../lib/shared/sharedConfig';
 import page from './pages/indexPage';
 
-const pullRequest = require('../fixtures/pullRequest');
-
 const mockGithub = new MockGithubApp({ port: 1338, routesDir: DEFAULT_CONFIG.mockRoutesDir });
 const mockGithubUrl = `http://${mockGithub.config.host}:${mockGithub.config.port}/${DEFAULT_CONFIG.mockPrefix}`;
 
@@ -28,16 +26,14 @@ fixture `Main page`
         await app.close();
         await mockGithub.close();
     })
-    .beforeEach(async () => {
-        pullRequestsModel.clear();
-    });
+    .beforeEach(() => pullRequestsModel.clear());
 
 test(`Pull Requests dynamically updated with time (${sharedConfig.POLLING_INTERVAL} ms interval)`, async t => {
     await t
         .expect(page.noPullRequestsDiv.exists)
         .ok();
 
-    pullRequestsModel.addPullRequest(pullRequest);
+    pullRequestsModel.generateMockPullRequests(1);
 
     await t
         .expect(page.pullRequestDiv.exists)
@@ -49,7 +45,7 @@ test(`Pull Requests updated via click on reload button`, async t => {
         .expect(page.noPullRequestsDiv.exists)
         .ok();
 
-    pullRequestsModel.addPullRequest(pullRequest);
+    pullRequestsModel.generateMockPullRequests(1);
 
     await page.clickReloadBtn();
 

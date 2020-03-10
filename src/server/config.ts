@@ -20,6 +20,7 @@ export interface Config {
     githubAPIURL: string;
     defaultGithubAvatarURL: string;
     mockAnswerTime: number;
+    numOfMockPullRequests: number;
 }
 
 export const DEFAULT_CONFIG = {
@@ -36,7 +37,8 @@ export const DEFAULT_CONFIG = {
     jsonExpressSettingSpaces: 2,
     githubAPIURL:             'https://api.github.com',
     defaultGithubAvatarURL:   'https://avatars3.githubusercontent.com/u/26363017?s=460&v=4',
-    mockAnswerTime:           1000
+    mockAnswerTime:           1000,
+    numOfMockPullRequests:    5
 } as Config;
 
 export default function createConfig (config?: Partial<Config>): Config {
