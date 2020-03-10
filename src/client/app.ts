@@ -11,11 +11,6 @@ export default class GHCApp extends HTMLElement {
     constructor () {
         super();
 
-        const loader = document?.getElementById('loader');
-
-        if (loader)
-            this.removeChild(loader);
-
         this.defineCustomElements();
         this.setEventHandlers();
     }
@@ -30,8 +25,9 @@ export default class GHCApp extends HTMLElement {
     setEventHandlers (): void {
         const header = document?.querySelector('GHC-Header');
         const repos = document?.querySelector('GHC-Repos');
+        const pullrequests = document?.querySelector('GHC-PullRequestList');
 
-        if (header && repos) {
+        if (header && repos && pullrequests) {
             const pulls = document.querySelector('GHC-PullRequestList');
 
             header.addEventListener('reloadButtonClicked', async () => {
@@ -39,7 +35,16 @@ export default class GHCApp extends HTMLElement {
                 await (pulls as PullRequestsComponent).render();
             });
 
+            pullrequests.addEventListener('pullRequestsLoaded', async () => {
+                const loader = document?.getElementById('page-loader');
+
+                if (loader)
+                    this.removeChild(loader);
+            });
+
             setInterval(async () => await (pulls as PullRequestsComponent).render(), config.POLLING_INTERVAL);
         }
+        else
+            throw new Error('Error occured while web components loading');
     }
 }

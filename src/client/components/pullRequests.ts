@@ -17,7 +17,11 @@ export default class PullRequestsComponent extends HTMLElement {
 
     async render (): Promise<void> {
         try {
+            this.showLoader();
+
             const { pullRequestList: pulls } = await PullsController.list();
+
+            this.dispatchEvent(new CustomEvent('pullRequestsLoaded'));
 
             const pullRequestListTmpl = await loadTemplate('pullRequestList');
             const pullRequestTmpl = await loadTemplate('pullRequest');
@@ -39,5 +43,16 @@ export default class PullRequestsComponent extends HTMLElement {
 
             throw err;
         }
+    }
+
+    showLoader (): void {
+        const loader = this.querySelector('#pullrequests-loader') as HTMLDivElement | null;
+        const wrapper = this.querySelector('#pullrequests-load-wrapper') as HTMLDivElement | null;
+
+        if (wrapper)
+            wrapper.hidden = false;
+
+        if (loader)
+            loader.hidden = false;
     }
 }

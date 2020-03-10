@@ -3,6 +3,19 @@
     {{# pulls }}
         {{> pull }}
     {{/pulls}}
+
+    {{! Wrapper and Loader which is shown when Pull Requests loading from the server (hidden by default) }}
+    <div id="pullrequests-load-wrapper" hidden></div>
+    
+    <div id="pullrequests-loader" hidden>
+        <div class="preloader-wrapper medium active loader">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left"><div class="circle"></div></div>
+                <div class="gap-patch"><div class="circle"></div></div>
+                <div class="circle-clipper right"><div class="circle"></div></div>
+            </div>
+        </div>
+    </div>
 </ul>
 
 {{! This message show when there are not Pull Requests }}

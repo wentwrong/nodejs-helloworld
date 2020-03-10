@@ -19,6 +19,7 @@ export interface Config {
     jsonExpressSettingSpaces: 2;
     githubAPIURL: string;
     defaultGithubAvatarURL: string;
+    mockAnswerTime: number;
 }
 
 export const DEFAULT_CONFIG = {
@@ -34,7 +35,8 @@ export const DEFAULT_CONFIG = {
     jsonExpressSettingName:   'json spaces',
     jsonExpressSettingSpaces: 2,
     githubAPIURL:             'https://api.github.com',
-    defaultGithubAvatarURL:   'https://avatars3.githubusercontent.com/u/26363017?s=460&v=4'
+    defaultGithubAvatarURL:   'https://avatars3.githubusercontent.com/u/26363017?s=460&v=4',
+    mockAnswerTime:           1000
 } as Config;
 
 export default function createConfig (config?: Partial<Config>): Config {
