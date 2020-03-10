@@ -28,8 +28,8 @@
   "homepage": "https://github.com/wentwrong/gh-canary/#readme",
   "devDependencies": {
     "@types/materialize-css": "^1.0.7",
-    "@typescript-eslint/eslint-plugin": "^2.22.0",
-    "@typescript-eslint/parser": "^2.22.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
     "del": "^5.1.0",

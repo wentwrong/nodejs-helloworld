@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import got from 'got';
+import axios from 'axios';
 import App from '../../../';
 import MockGithubApp from '../../../lib/mock-github/mockGithubApp';
 import pullRequestsModel from '../../../lib/mock-github/models/pullRequestsModel';
@@ -34,9 +34,9 @@ describe(`REST API`, () => {
 
         pullRequestsModel.addPullRequest(pullRequest);
 
-        const response = await got(url, { responseType: 'json' });
+        const response = await axios.get(url, { responseType: 'json' });
 
-        expect(response.statusCode).equal(200);
-        expect(response.body.pullRequestList).to.eql([ pullRequest ]);
+        expect(response.status).equal(200);
+        expect(response.data.pullRequestList).to.eql([ pullRequest ]);
     });
 });
