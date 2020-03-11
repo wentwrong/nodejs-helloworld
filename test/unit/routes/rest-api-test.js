@@ -15,7 +15,7 @@ describe(`REST API`, () => {
         slugs:        ['wentwrong/gh-canary']
     });
 
-    beforeEach(pullRequestsModel.clear);
+    beforeEach(() => pullRequestsModel.clear());
 
     before(async () => {
         await app.run();

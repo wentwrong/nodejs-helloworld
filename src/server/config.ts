@@ -19,6 +19,7 @@ export interface Config {
     jsonExpressSettingSpaces: 2;
     githubAPIURL: string;
     defaultGithubAvatarURL: string;
+    githubAuthToken: string;
     mockAnswerTime: number;
     numOfMockPullRequests: number;
 }
@@ -37,6 +38,7 @@ export const DEFAULT_CONFIG = {
     jsonExpressSettingSpaces: 2,
     githubAPIURL:             'https://api.github.com',
     defaultGithubAvatarURL:   'https://avatars3.githubusercontent.com/u/26363017?s=460&v=4',
+    githubAuthToken:          process.env.TOKEN || 'auth-1337',
     mockAnswerTime:           1000,
     numOfMockPullRequests:    5
 } as Config;
