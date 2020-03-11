@@ -27,7 +27,7 @@ export interface Config {
 export const DEFAULT_CONFIG = {
     host:                     process.env.HOST || '127.0.0.1',
     port:                     process.env.PORT || 1337,
-    slugs:                    process.env.SLUGS?.split(',') || [ 'DevExpress/testcafe' ],
+    slugs:                    process.env.SLUGS?.split(',') || [ 'wentwrong/gh-canary' ],
     apiVersion:               process.env.API_VERSION || 'v1',
     mockPrefix:               process.env.MOCK_PREFIX || 'mock-github',
     mockRoutesDir:            process.env.MOCK_ROUTES_DIR || path.join(APP_ROOT, 'lib/mock-github/routes'),

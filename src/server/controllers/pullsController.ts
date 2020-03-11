@@ -3,6 +3,7 @@ import { Octokit } from '@octokit/rest';
 import debugFactory from '../../shared/debugFactory';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
 import { Config } from '../config';
+import { PullRequestInfo } from '../../shared/interfaces/ownerRepo';
 
 const debug = debugFactory('pulls-controller');
 
@@ -49,7 +50,7 @@ export default class PullsController {
         const [ owner, repo ] = slug.split('/');
         const options = this.octokit.pulls.list.endpoint.merge({ owner, repo });
 
-        const onlyNonCollaboratorsFilter = function (response: Octokit.AnyResponse): Octokit.AnyResponse {
+        const onlyNonCollaboratorsFilter = (response: Octokit.AnyResponse): Octokit.AnyResponse => {
             return response.data
                 .filter((pr: PullRequest) => pr.author_association === 'NONE');
         };
@@ -60,6 +61,30 @@ export default class PullsController {
     }
 
     async addComment (req: express.Request, res: express.Response): Promise<void> {
-        res.json({ message: 'NOT IMPLEMENTED YET' });
+        try {
+            const pulls: PullRequestInfo[] = req.body.pulls;
+            const commentMsg: string = req.body.commentMsg;
+
+            const fn = (pull: PullRequestInfo): void => {
+                const options = {
+                    ...pull,
+                    body: commentMsg
+                };
+
+                this.octokit.issues.createComment(options);
+            };
+
+            pulls.map(fn);
+
+            res.json({ message: 'Comment was added successfully' });
+        }
+        catch (err) {
+            debug.error(`An error has happened when ${req.ip} add comment`);
+            debug.error(err);
+
+            res
+                .status(500)
+                .json({ error: 'An error has occured while comment sent' });
+        }
     }
 }

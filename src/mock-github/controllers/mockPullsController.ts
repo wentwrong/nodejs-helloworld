@@ -14,4 +14,11 @@ export default class MockPullsController {
 
         res.json(pulls);
     }
+
+    async addComment (req: express.Request, res: express.Response): Promise<void> {
+        if (req.headers?.authorization === `token ${DEFAULT_CONFIG.githubAuthToken}`)
+            res.json({ message: 'Comment was sent' });
+        else
+            res.status(401).send('Bad credentials');
+    }
 }

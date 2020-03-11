@@ -11,6 +11,7 @@ export default class MockPullsRouter implements RouterWrapper {
 
     init (): express.Router {
         return express.Router()
-            .get('/:owner/:repo/pulls', this.controller.list.bind(this.controller));
+            .get('/:owner/:repo/pulls', this.controller.list.bind(this.controller))
+            .post('/:owner/:repo/issues/:issue_number/comments', this.controller.addComment.bind(this.controller));
     }
 }

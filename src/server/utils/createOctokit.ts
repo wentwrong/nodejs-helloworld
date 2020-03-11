@@ -7,6 +7,7 @@ export default function createOctokit (config: Config): Octokit {
 
     return new Octokit({
         baseUrl: config.githubAPIURL,
+        auth:    config.githubAuthToken,
         log:     {
             debug: octokitDebug.log,
             info:  octokitDebug.log,

@@ -21,6 +21,10 @@ export default class PullRequestsComponent extends HTMLElement {
         await this.render();
     }
 
+    getCheckedPullRequests (): Set<string> {
+        return this.checkedPullRequests;
+    }
+
     async render (): Promise<void> {
         try {
             this.showLoader();
