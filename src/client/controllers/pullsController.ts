@@ -1,7 +1,7 @@
 import { PullRequestList } from '../../shared/interfaces/pullRequests';
 import debugFactory from '../../shared/debugFactory';
 import errorRegister from '../../shared/errorRegister';
-import { PullRequestInfo } from '../../shared/interfaces/ownerRepo';
+import { PullRequestInfo } from '../../shared/interfaces/pullRequestInfo';
 
 const debug = debugFactory('pulls-controller');
 

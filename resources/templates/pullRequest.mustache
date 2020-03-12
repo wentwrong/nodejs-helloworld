@@ -8,11 +8,11 @@
     {{! This is `created_at` datetime in format `days/months/years ago from today` }}
     <p class="grey-text">{{ formatTimeFromToday }}</p>
     <label class="secondary-content">
-        <input type="checkbox" 
-               class="pullrequest-checkbox" 
-               value="{{ html_url }}" 
+        <input type="checkbox"
+               value="{{ html_url }}"
+               class="pullrequest-checkbox"
                {{# checked }}checked{{/ checked }}
         />
-        <span></span>
+        <span class="pullrequest-span-checkbox"></span>
     </label>
 </li>

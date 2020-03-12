@@ -6,7 +6,7 @@ import ModalComponent from './components/modal';
 import ReposComponent from './components/repos';
 import config from '../shared/sharedConfig';
 import PullsController from './controllers/pullsController';
-import { PullRequestInfo } from '../shared/interfaces/ownerRepo';
+import { PullRequestInfo } from '../shared/interfaces/pullRequestInfo';
 
 const debug = debugFactory('app');
 

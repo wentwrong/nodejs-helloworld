@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest';
 import debugFactory from '../../shared/debugFactory';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
 import { Config } from '../config';
-import { PullRequestInfo } from '../../shared/interfaces/ownerRepo';
+import { PullRequestInfo } from '../../shared/interfaces/pullRequestInfo';
 
 const debug = debugFactory('pulls-controller');
 
