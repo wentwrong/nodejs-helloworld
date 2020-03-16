@@ -1,40 +1,32 @@
 import express from 'express';
 import { Octokit } from '@octokit/rest';
-import config from '../config';
 import debugFactory from '../../shared/debugFactory';
 import { PullRequest } from '../../shared/interfaces/pullRequests';
+import { Config } from '../config';
+import { PullRequestInfo } from '../../shared/interfaces/pullRequestInfo';
 
 const debug = debugFactory('pulls-controller');
 
 export default class PullsController {
+    // TODO:
+    // Dependency Injection
+    constructor (private config: Config, private octokit: Octokit) { }
+
     /**
-     * Make a request to github API for all pull requests fetching and return it to user
+     * Gathering non-collaborator pull requests for all config-specified `slugs`
      *
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @returns {Promise<void>}
      * @memberof PullsController
      */
-    static async list (req: express.Request, res: express.Response): Promise<void> {
-        const octokit = new Octokit({
-            baseUrl: req.app.get(config.GITHUB_API_VAR_NAME) || config.DEFAULT_GITHUB_API_URL
-        });
-
-        const options = octokit.pulls.list.endpoint.merge({
-            owner: config.OWNER,
-            repo:  config.REPO
-        });
-
+    async list (req: express.Request, res: express.Response): Promise<void> {
         try {
-            const pullRequests = [];
+            const pulls = await Promise.all(
+                this.config.slugs.map(async slug => await this.fetchPullRequests(slug))
+            );
 
-            for await (const page of octokit.paginate.iterator(options)) {
-                pullRequests.push(page['data']
-                    .filter((pr: PullRequest) => pr['author_association'] === 'NONE'));
-            }
-
-            res.send({ pullRequestList: pullRequests.flat() });
+            res.send({ pullRequestList: pulls.flat() });
         }
         catch (err) {
             debug.error(`An error has happened when ${req.ip} requests ${req.path}`);
@@ -46,7 +38,53 @@ export default class PullsController {
         }
     }
 
-    static async addComment (req: express.Request, res: express.Response): Promise<void> {
-        res.json({ message: 'NOT IMPLEMENTED YET' });
+    /**
+     * Fetch non-collaborator pull requests from given `slug`
+     *
+     * @private
+     * @param {string} slug
+     * @returns {Promise<void>}
+     * @memberof PullsController
+     */
+    async fetchPullRequests (slug: string): Promise<PullRequest[]> {
+        const [ owner, repo ] = slug.split('/');
+        const options = this.octokit.pulls.list.endpoint.merge({ owner, repo });
+
+        const onlyNonCollaboratorsFilter = (response: Octokit.AnyResponse): Octokit.AnyResponse => {
+            return response.data
+                .filter((pr: PullRequest) => pr.author_association === 'NONE');
+        };
+
+        const pulls: PullRequest[] = await this.octokit.paginate(options, onlyNonCollaboratorsFilter);
+
+        return pulls;
+    }
+
+    async addComment (req: express.Request, res: express.Response): Promise<void> {
+        try {
+            const pulls: PullRequestInfo[] = req.body.pulls;
+            const commentMsg: string = req.body.commentMsg;
+
+            const fn = (pull: PullRequestInfo): void => {
+                const options = {
+                    ...pull,
+                    body: commentMsg
+                };
+
+                this.octokit.issues.createComment(options);
+            };
+
+            pulls.map(fn);
+
+            res.json({ message: 'Comment was added successfully' });
+        }
+        catch (err) {
+            debug.error(`An error has happened when ${req.ip} add comment`);
+            debug.error(err);
+
+            res
+                .status(500)
+                .json({ error: 'An error has occured while comment sent' });
+        }
     }
 }

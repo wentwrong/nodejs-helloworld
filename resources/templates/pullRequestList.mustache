@@ -1,0 +1,27 @@
+{{! This is `Pull Request List` item which appear when user decided to fetch pull requests from given `slug` }}
+<ul class="collection" {{^ pulls }}hidden{{/ pulls }}>
+    {{# pulls }}
+        {{> pull }}
+    {{/pulls}}
+
+    {{! Wrapper and Loader which is shown when Pull Requests loading from the server (hidden by default) }}
+    <div id="pullrequests-load-wrapper" hidden></div>
+    
+    <div id="pullrequests-loader" hidden>
+        <div class="preloader-wrapper medium active loader">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left"><div class="circle"></div></div>
+                <div class="gap-patch"><div class="circle"></div></div>
+                <div class="circle-clipper right"><div class="circle"></div></div>
+            </div>
+        </div>
+    </div>
+</ul>
+
+{{! This message show when there are not Pull Requests }}
+{{^ pulls }}
+    <div class="card-panel red lighten-2" id="no-pull-requests">
+        {{! `slug` is `owner/repo` }}
+        <h2>0 non-collaborator Pull Requests</h2>
+    </div>
+{{/ pulls }}

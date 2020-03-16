@@ -1,0 +1,18 @@
+{{! This is single `Pull Request` item (part of `Pull Request List`) }}
+<li class="collection-item avatar" id="pull-request">
+    <img src="{{ user.avatar_url }}" class="circle">
+    <span class="title" class="truncate">
+        <a href="{{ html_url }}">{{ title }} #{{ number }}</a> by
+        <a href="{{ user.html_url }}">{{ user.login }}</a>
+    </span>
+    {{! This is `created_at` datetime in format `days/months/years ago from today` }}
+    <p class="grey-text">{{ formatTimeFromToday }}</p>
+    <label class="secondary-content">
+        <input type="checkbox"
+               value="{{ html_url }}"
+               class="pullrequest-checkbox"
+               {{# checked }}checked{{/ checked }}
+        />
+        <span class="pullrequest-span-checkbox"></span>
+    </label>
+</li>

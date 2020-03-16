@@ -3,24 +3,46 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const [ OWNER, REPO ] = process.env.REPO_SLUG ? process.env.REPO_SLUG.split('/') : [ 'DevExpress', 'testcafe' ];
+const APP_ROOT = path.join(__dirname, '../../');
 
-const APP_ROOT: string = path.join(__dirname, '../../');
+export interface Config {
+    port: string | number;
+    host: string;
+    slugs: string[];
+    apiVersion: string;
+    mockPrefix: string;
+    mockRoutesDir: string;
+    staticDir: string;
+    clientScriptsDir: string;
+    routesDir: string;
+    jsonExpressSettingName: string;
+    jsonExpressSettingSpaces: 2;
+    githubAPIURL: string;
+    defaultGithubAvatarURL: string;
+    githubAuthToken: string;
+    mockAnswerTime: number;
+    numOfMockPullRequests: number;
+}
 
-export default {
-    PORT:                   process.env.PORT || 1337,
-    HOST:                   process.env.HOST || '127.0.0.1',
-    NODE_ENV:               process.env.NODE_ENV || 'production',
-    OWNER,
-    REPO,
-    API_VERSION:            'v1',
-    MOCK_GITHUB_PREFIX:     'mock-github',
-    STATIC_DIR:             path.join(APP_ROOT, 'resources/html'),
-    CLIENT_SCRIPTS_DIR:     path.join(APP_ROOT, 'lib/client'),
-    ROUTES_DIR:             path.join(APP_ROOT, 'lib/server/routes'),
-    MOCK_ROUTES_DIR:        path.join(APP_ROOT, 'lib/mock-github/routes'),
-    JSON_SETTING_NAME:      'json spaces',
-    JSON_SPACES:            2,
-    DEFAULT_GITHUB_API_URL: 'https://api.github.com',
-    GITHUB_API_VAR_NAME:    'github-api-url'
-};
+export const DEFAULT_CONFIG = {
+    host:                     process.env.HOST || '127.0.0.1',
+    port:                     process.env.PORT || 1337,
+    slugs:                    process.env.SLUGS?.split(',') || [ 'wentwrong/gh-canary' ],
+    apiVersion:               process.env.API_VERSION || 'v1',
+    mockPrefix:               process.env.MOCK_PREFIX || 'mock-github',
+    mockRoutesDir:            process.env.MOCK_ROUTES_DIR || path.join(APP_ROOT, 'lib/mock-github/routes'),
+    staticDir:                process.env.STATIC_DIR || path.join(APP_ROOT, 'resources'),
+    clientScriptsDir:         process.env.CLIENT_SCRIPTS_DIR || path.join(APP_ROOT, 'lib/client'),
+    routesDir:                process.env.ROUTES_DIR || path.join(APP_ROOT, 'lib/server/routes'),
+    jsonExpressSettingName:   'json spaces',
+    jsonExpressSettingSpaces: 2,
+    githubAPIURL:             'https://api.github.com',
+    defaultGithubAvatarURL:   'https://avatars3.githubusercontent.com/u/26363017?s=460&v=4',
+    githubAuthToken:          process.env.TOKEN || 'auth-1337',
+    mockAnswerTime:           1000,
+    numOfMockPullRequests:    5
+} as Config;
+
+export default function createConfig (config?: Partial<Config>): Config {
+    return Object.freeze({ ...DEFAULT_CONFIG, ...config });
+}

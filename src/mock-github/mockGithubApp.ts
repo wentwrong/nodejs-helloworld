@@ -1,8 +1,8 @@
 import ConfiguratedExpress from '../server/configuratedExpress';
-import { AppConfigurationAsParam } from '../server/utils/app/appConfiguration';
+import { Config } from '../server/config';
 
 export default class MockGithubApp extends ConfiguratedExpress {
-    constructor (conf?: AppConfigurationAsParam) {
+    constructor (conf?: Partial<Config>) {
         super(conf);
     }
 }
