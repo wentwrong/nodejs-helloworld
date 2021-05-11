@@ -65,7 +65,7 @@
     "globby": "^11.0.0",
     "got": "^10.6.0",
     "gulp-sourcemaps": "^2.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
     "mustache": "^4.0.0"
